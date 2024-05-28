@@ -2,22 +2,22 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from python_template.infrastructure.acl.translators.update_account_request_dto_translator import (
-    UpdateAccountRequestDtoTranslator,
-)
-from python_template.infrastructure.acl.dto.update_account_request_dto import (
-    UpdateAccountRequestDto,
-)
-from python_template.app.services.update_account_service import UpdateAccountService
 from python_template.app.services.delete_account_service import DeleteAccountService
 from python_template.app.services.get_accounts_service import GetAccountsService
 from python_template.app.services.insert_account_service import InsertAccountService
+from python_template.app.services.update_account_service import UpdateAccountService
 from python_template.domain.model.account import Account, AccountId
 from python_template.infrastructure.acl.dto.insert_account_request_dto import (
     InsertAccountRequestDto,
 )
+from python_template.infrastructure.acl.dto.update_account_request_dto import (
+    UpdateAccountRequestDto,
+)
 from python_template.infrastructure.acl.translators.insert_account_request_dto_translator import (
     InsertAccountRequestDtoTranslator,
+)
+from python_template.infrastructure.acl.translators.update_account_request_dto_translator import (
+    UpdateAccountRequestDtoTranslator,
 )
 from python_template.infrastructure.adapters.output.repositories.account_repository_dict import (
     AccountRepositoryDict,

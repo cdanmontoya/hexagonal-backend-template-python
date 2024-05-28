@@ -1,7 +1,7 @@
-from python_template.domain.model.account import Account, AccountId
 from python_template.app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
+from python_template.domain.model.account import Account, AccountId
 
 
 class DeleteAccountService:
