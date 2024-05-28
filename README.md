@@ -4,3 +4,17 @@
 ![](https://img.shields.io/badge/fastapi-109989?style=for-the-badge&logo=FASTAPI&logoColor=white)
 ![](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
+
+
+# Run locally
+```bash
+uvicorn python_template.infrastructure.adapters.input.http.application:app --host 0.0.0.0 --port 15000 --reload
+```
+
+# Tests
+
+```bash
+coverage run --source=src -m pytest tests
+coverage report
+coverage html
+```
