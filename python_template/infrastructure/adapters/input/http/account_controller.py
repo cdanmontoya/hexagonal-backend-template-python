@@ -3,21 +3,27 @@ from uuid import UUID
 from fastapi import APIRouter
 from injector import inject
 
-from python_template.app.services.delete_account_service import DeleteAccountService
-from python_template.app.services.get_accounts_service import GetAccountsService
-from python_template.app.services.insert_account_service import InsertAccountService
-from python_template.app.services.update_account_service import UpdateAccountService
-from python_template.domain.model.account import Account, AccountId
-from python_template.infrastructure.acl.dto.insert_account_request_dto import (
+from app.services.delete_account_service import DeleteAccountService
+from app.services.get_accounts_service import GetAccountsService
+from app.services.insert_account_service import InsertAccountService
+from app.services.update_account_service import UpdateAccountService
+from domain.model.account import AccountId
+from infrastructure.acl.dto.account_dto import AccountDto
+from infrastructure.acl.dto.get_all_accounts_dto import GetAllAccountsResponseDto
+from infrastructure.acl.dto.insert_account_request_dto import (
     InsertAccountRequestDto,
 )
-from python_template.infrastructure.acl.dto.update_account_request_dto import (
+from infrastructure.acl.dto.update_account_request_dto import (
     UpdateAccountRequestDto,
 )
-from python_template.infrastructure.acl.translators.insert_account_request_dto_translator import (
+from infrastructure.acl.translators.account_dto_translator import AccountDtoTranslator
+from infrastructure.acl.translators.get_all_accounts_response_dto_translator import (
+    GetAllAccountsDtoTranslator,
+)
+from infrastructure.acl.translators.insert_account_request_dto_translator import (
     InsertAccountRequestDtoTranslator,
 )
-from python_template.infrastructure.acl.translators.update_account_request_dto_translator import (
+from infrastructure.acl.translators.update_account_request_dto_translator import (
     UpdateAccountRequestDtoTranslator,
 )
 
@@ -52,19 +58,24 @@ class AccountController:
         self.router.add_api_route("/{account_id}", self.delete, methods=["DELETE"])
         self.router.add_api_route("/{account_id}", self.update, methods=["PUT"])
 
-    async def insert(self, request: InsertAccountRequestDto) -> Account:
+    async def insert(self, request: InsertAccountRequestDto) -> AccountDto:
         insert_account = InsertAccountRequestDtoTranslator.of(request)
-        return self.__insert_account_service.insert(insert_account)
+        account = self.__insert_account_service.insert(insert_account)
+        return AccountDtoTranslator.of(account)
 
-    async def get_all(self) -> list[Account]:
-        return self.__get_accounts_service.get_all()
+    async def get_all(self) -> GetAllAccountsResponseDto:
+        accounts = self.__get_accounts_service.get_all()
+        return GetAllAccountsDtoTranslator.of(accounts)
 
-    async def get(self, account_id: UUID) -> Account | None:
-        return self.__get_accounts_service.get(AccountId(account_id))
+    async def get(self, account_id: UUID) -> AccountDto | None:
+        account = self.__get_accounts_service.get(AccountId(account_id))
+        return AccountDtoTranslator.of(account)
 
-    async def delete(self, account_id: UUID) -> Account:
-        return self.__delete_account_service.delete(AccountId(account_id))
+    async def delete(self, account_id: UUID) -> AccountDto:
+        account = self.__delete_account_service.delete(AccountId(account_id))
+        return AccountDtoTranslator.of(account)
 
-    async def update(self, request: UpdateAccountRequestDto) -> Account:
+    async def update(self, request: UpdateAccountRequestDto) -> AccountDto:
         update_account = UpdateAccountRequestDtoTranslator.of(request)
-        return self.__update_account_service.update(update_account)
+        account = self.__update_account_service.update(update_account)
+        return AccountDtoTranslator.of(account)
