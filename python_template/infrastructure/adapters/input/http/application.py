@@ -1,10 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-from python_template.infrastructure.adapters.input.http.account_controller import (
+from infrastructure.adapters.input.http.account_controller import (
     AccountController,
 )
-from python_template.infrastructure.injector.injector import injector
+from infrastructure.injector.injector import injector
 
 
 class Application:

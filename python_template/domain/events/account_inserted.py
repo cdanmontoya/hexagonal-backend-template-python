@@ -1,5 +1,5 @@
-from python_template.domain.events.event import Event
-from python_template.domain.model.account import Account
+from domain.events.event import Event
+from domain.model.account import Account
 
 
 class AccountInserted(Event):

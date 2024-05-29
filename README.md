@@ -19,7 +19,8 @@
 
 # Run locally
 ```bash
-uvicorn python_template.infrastructure.adapters.input.http.application:app --host 0.0.0.0 --port 15000 --reload
+cd python_template
+uvicorn infrastructure.adapters.input.http.application:app --host 0.0.0.0 --port 15000 --reload
 ```
 
 # Tests

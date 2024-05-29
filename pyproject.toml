@@ -9,7 +9,7 @@ packages = [{ include = "python_template" }]
 [tool.poetry.dependencies]
 python = "^3.12"
 fastapi = "^0.111.0"
-pydantic = "^2.7.1"
+pydantic = "^2.7.2"
 sqlalchemy = "^2.0.30"
 psycopg2-binary = "^2.9.9"
 injector = "^0.21.0"
@@ -31,6 +31,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.importlinter]
 root_package = "python_template"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  ".", "python_template"
+]
 
 [[tool.importlinter.contracts]]
 name = "Bussiness layers should not import classes or methods from infrastructure layers"

@@ -1,11 +1,11 @@
 from injector import inject
 
-from python_template.app.commands.update_account import UpdateAccount
-from python_template.app.ports.output.repositories.account_repository import (
+from app.commands.update_account import UpdateAccount
+from app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
-from python_template.domain.model.account import Account
-from python_template.domain.model.contact_information import ContactInformation
+from domain.model.account import Account
+from domain.model.contact_information import ContactInformation
 
 
 class UpdateAccountService:
