@@ -7,7 +7,7 @@ from app.services.delete_account_service import DeleteAccountService
 from app.services.get_accounts_service import GetAccountsService
 from app.services.insert_account_service import InsertAccountService
 from app.services.update_account_service import UpdateAccountService
-from domain.model.account import Account, AccountId
+from domain.model.account import AccountId
 from infrastructure.acl.dto.account_dto import AccountDto
 from infrastructure.acl.dto.get_all_accounts_dto import GetAllAccountsResponseDto
 from infrastructure.acl.dto.insert_account_request_dto import (
@@ -17,7 +17,9 @@ from infrastructure.acl.dto.update_account_request_dto import (
     UpdateAccountRequestDto,
 )
 from infrastructure.acl.translators.account_dto_translator import AccountDtoTranslator
-from infrastructure.acl.translators.get_all_accounts_response_dto_translator import GetAllAccountsDtoTranslator
+from infrastructure.acl.translators.get_all_accounts_response_dto_translator import (
+    GetAllAccountsDtoTranslator,
+)
 from infrastructure.acl.translators.insert_account_request_dto_translator import (
     InsertAccountRequestDtoTranslator,
 )
@@ -35,11 +37,11 @@ class AccountController:
 
     @inject
     def __init__(
-            self,
-            insert_account_service: InsertAccountService,
-            get_accounts_service: GetAccountsService,
-            delete_account_service: DeleteAccountService,
-            update_account_service: UpdateAccountService,
+        self,
+        insert_account_service: InsertAccountService,
+        get_accounts_service: GetAccountsService,
+        delete_account_service: DeleteAccountService,
+        update_account_service: UpdateAccountService,
     ) -> None:
         self.router = APIRouter(
             prefix="/accounts",
