@@ -29,7 +29,7 @@ jobs:
         run: |
           coverage run --source=python_template -m pytest tests
           coverage report
-          coverage xml
+          coverage xml -i
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
