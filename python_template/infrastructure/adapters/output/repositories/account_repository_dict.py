@@ -1,11 +1,14 @@
 from typing import override
 
+from injector import singleton
+
 from python_template.app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
 from python_template.domain.model.account import Account, AccountId
 
 
+@singleton
 class AccountRepositoryDict(AccountRepository):
     __db: dict[AccountId, Account]
 
