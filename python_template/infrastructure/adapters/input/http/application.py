@@ -10,7 +10,7 @@ from python_template.infrastructure.injector.injector import injector
 class Application:
     __account_controller: AccountController
 
-    def __init__(self, account_controller: AccountController):
+    def __init__(self, account_controller: AccountController) -> None:
         self.__account_controller = account_controller
 
     def create_app(self) -> FastAPI:
