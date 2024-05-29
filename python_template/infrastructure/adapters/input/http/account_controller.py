@@ -1,26 +1,24 @@
 from uuid import UUID
 
 from fastapi import APIRouter
+from injector import inject
 
-from python_template.infrastructure.acl.translators.update_account_request_dto_translator import (
-    UpdateAccountRequestDtoTranslator,
-)
-from python_template.infrastructure.acl.dto.update_account_request_dto import (
-    UpdateAccountRequestDto,
-)
-from python_template.app.services.update_account_service import UpdateAccountService
 from python_template.app.services.delete_account_service import DeleteAccountService
 from python_template.app.services.get_accounts_service import GetAccountsService
 from python_template.app.services.insert_account_service import InsertAccountService
+from python_template.app.services.update_account_service import UpdateAccountService
 from python_template.domain.model.account import Account, AccountId
 from python_template.infrastructure.acl.dto.insert_account_request_dto import (
     InsertAccountRequestDto,
 )
+from python_template.infrastructure.acl.dto.update_account_request_dto import (
+    UpdateAccountRequestDto,
+)
 from python_template.infrastructure.acl.translators.insert_account_request_dto_translator import (
     InsertAccountRequestDtoTranslator,
 )
-from python_template.infrastructure.adapters.output.repositories.account_repository_dict import (
-    AccountRepositoryDict,
+from python_template.infrastructure.acl.translators.update_account_request_dto_translator import (
+    UpdateAccountRequestDtoTranslator,
 )
 
 
@@ -31,18 +29,22 @@ class AccountController:
     __delete_account_service: DeleteAccountService
     __update_account_service: UpdateAccountService
 
-    def __init__(self) -> None:
+    @inject
+    def __init__(
+        self,
+        insert_account_service: InsertAccountService,
+        get_accounts_service: GetAccountsService,
+        delete_account_service: DeleteAccountService,
+        update_account_service: UpdateAccountService,
+    ) -> None:
         self.router = APIRouter(
             prefix="/accounts",
             tags=["accounts"],
         )
-
-        # TODO: Dependency Injection
-        account_repository = AccountRepositoryDict()
-        self.__insert_account_service = InsertAccountService(account_repository)
-        self.__get_accounts_service = GetAccountsService(account_repository)
-        self.__delete_account_service = DeleteAccountService(account_repository)
-        self.__update_account_service = UpdateAccountService(account_repository)
+        self.__insert_account_service = insert_account_service
+        self.__get_accounts_service = get_accounts_service
+        self.__delete_account_service = delete_account_service
+        self.__update_account_service = update_account_service
 
         self.router.add_api_route("/", self.insert, methods=["POST"])
         self.router.add_api_route("/", self.get_all, methods=["GET"])

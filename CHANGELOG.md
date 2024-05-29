@@ -9,3 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2024-05-20
 ### Added
 - Folder structure
+- [2] Set up injector as the dependency injection library
