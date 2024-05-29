@@ -18,3 +18,9 @@ coverage run --source=python_template -m pytest tests
 coverage report
 coverage html
 ```
+
+# Dependency management
+
+```bash
+poetry export --without-hashes --format=requirements.txt > requirements.txt
+```
