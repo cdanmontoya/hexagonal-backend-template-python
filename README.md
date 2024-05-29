@@ -14,7 +14,7 @@ uvicorn python_template.infrastructure.adapters.input.http.application:app --hos
 # Tests
 
 ```bash
-coverage run --source=src -m pytest tests
+coverage run --source=python_template -m pytest tests
 coverage report
 coverage html
 ```
