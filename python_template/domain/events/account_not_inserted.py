@@ -1,4 +1,4 @@
-from python_template.domain.events.event import Event
+from domain.events.event import Event
 
 
 class AccountNotInserted(Event):

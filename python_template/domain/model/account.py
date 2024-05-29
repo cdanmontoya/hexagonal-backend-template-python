@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from uuid import UUID
 
-from python_template.domain.model.contact_information import ContactInformation
+from domain.model.contact_information import ContactInformation
 
 
 @dataclass(frozen=True)

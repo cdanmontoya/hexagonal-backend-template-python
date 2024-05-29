@@ -1,9 +1,9 @@
 from injector import inject
 
-from python_template.app.ports.output.repositories.account_repository import (
+from app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
-from python_template.domain.model.account import Account, AccountId
+from domain.model.account import Account, AccountId
 
 
 class GetAccountsService:

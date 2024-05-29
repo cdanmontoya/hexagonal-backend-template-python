@@ -1,5 +1,5 @@
-from python_template.app.commands.insert_account import InsertAccount
-from python_template.infrastructure.acl.dto.insert_account_request_dto import (
+from app.commands.insert_account import InsertAccount
+from infrastructure.acl.dto.insert_account_request_dto import (
     InsertAccountRequestDto,
 )
 
@@ -7,5 +7,5 @@ from python_template.infrastructure.acl.dto.insert_account_request_dto import (
 class InsertAccountRequestDtoTranslator:
 
     @staticmethod
-    def of(request_dto: InsertAccountRequestDto):
+    def of(request_dto: InsertAccountRequestDto) -> InsertAccount:
         return InsertAccount(request_dto.email, request_dto.cellphones)

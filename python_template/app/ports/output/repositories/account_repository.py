@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from python_template.domain.model.account import Account, AccountId
+from domain.model.account import Account, AccountId
 
 
 class AccountRepository(ABC):

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from python_template.domain.model.account import AccountId
+from domain.model.account import AccountId
 
 
 @dataclass(frozen=True)
