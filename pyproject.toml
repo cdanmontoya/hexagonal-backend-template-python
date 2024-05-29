@@ -2,14 +2,43 @@
 name = "python-template"
 version = "0.1.0"
 description = ""
-authors = ["cdanmontoya <cdanmontoya@experimentality.co>"]
+authors = ["cdanmontoya <carlos.danmontoya@gmail.com>"]
 readme = "README.md"
-packages = [{include = "python_template"}]
+packages = [{ include = "python_template" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+fastapi = "^0.111.0"
+pydantic = "^2.7.1"
+sqlalchemy = "^2.0.30"
+psycopg2-binary = "^2.9.9"
+injector = "^0.21.0"
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+coverage = "^7.5.1"
+factory-boy = "^3.3.0"
+faker = "^25.2.0"
+pytest = "^8.2.1"
+mypy = "^1.10.0"
+testcontainers = { extras = ["postgres"], version = "^4.4.1" }
+import-linter = "^2.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.importlinter]
+root_package = "python_template"
+
+[[tool.importlinter.contracts]]
+name = "Bussiness layers should not import classes or methods from infrastructure layers"
+type = "forbidden"
+source_modules = [
+    "python_template.app",
+    "python_template.domain",
+]
+forbidden_modules = [
+    "python_template.infrastructure"
+]
