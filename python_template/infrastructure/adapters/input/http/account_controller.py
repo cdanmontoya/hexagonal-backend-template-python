@@ -16,8 +16,12 @@ from infrastructure.acl.dto.update_account_request_dto import (
     UpdateAccountRequestDto,
 )
 from infrastructure.acl.translators.account_dto_translator import AccountDtoTranslator
-from infrastructure.acl.translators.delete_account_request_dto_translator import DeleteAccountRequestDtoTranslator
-from infrastructure.acl.translators.get_accounts_request_dto_translator import GetAccountByIdRequestDtoTranslator
+from infrastructure.acl.translators.delete_account_request_dto_translator import (
+    DeleteAccountRequestDtoTranslator,
+)
+from infrastructure.acl.translators.get_accounts_request_dto_translator import (
+    GetAccountByIdRequestDtoTranslator,
+)
 from infrastructure.acl.translators.get_all_accounts_response_dto_translator import (
     GetAllAccountsDtoTranslator,
 )
