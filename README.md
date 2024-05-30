@@ -34,5 +34,6 @@ coverage html
 # Dependency management
 
 ```bash
-poetry export --without-hashes --format=requirements.txt > requirements.txt
+poetry shell
+poetry install
 ```
