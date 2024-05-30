@@ -30,9 +30,12 @@ def test_given_an_inserted_account_when_listing_all_should_return_a_non_empty_li
 def test_given_an_existing_account_when_deleting_should_return_ok(
     application: TestClient,
 ):
-    # TODO: This test should be independent
-    response_list = application.get("/accounts")
-    account_id = response_list.json()["accounts"][0]["id"]
+    insert_request = InsertAccountRequestDtoFactory()
+    insert_response = application.post("/accounts", json=insert_request.model_dump())
+
+    list_response = application.get("/accounts")
+    account_id = list_response.json()["accounts"][0]["id"]
+
     delete_response = application.delete(f"/accounts/{account_id}")
     response_list = application.get("/accounts")
 
