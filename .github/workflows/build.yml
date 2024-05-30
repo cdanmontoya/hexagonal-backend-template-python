@@ -27,7 +27,6 @@ jobs:
       - name: Install dependencies
         run: poetry install --with dev
 
-
   unit-test:
     name: Unit tests execution
     runs-on: ubuntu-latest
@@ -48,16 +47,11 @@ jobs:
           python-version: 3.12
           cache: 'poetry'
 
-#      - name: Install Dependencies
-#        run: |
-#          pip install -r requirements.txt
-#          pip install pytest coverage
-
       - name: Run Tests with Coverage
         run: |
-          coverage run --source=python_template -m pytest tests/unit
-          coverage report
-          coverage xml -i
+          poetry run coverage run --source=python_template -m pytest tests/unit
+          poetry run coverage report
+          poetry run coverage xml -i
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
@@ -75,7 +69,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
+
+      - name: Install poetry
+        run: pipx install poetry
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -83,16 +80,11 @@ jobs:
           python-version: 3.12
           cache: 'poetry'
 
-#      - name: Install Dependencies
-#        run: |
-#          pip install -r requirements.txt
-#          pip install pytest coverage
-
       - name: Run Tests with Coverage
         run: |
-          coverage run --source=python_template -m pytest tests/it
-          coverage report
-          coverage xml -i
+          poetry run coverage run --source=python_template -m pytest tests/it
+          poetry run coverage report
+          poetry run coverage xml -i
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
