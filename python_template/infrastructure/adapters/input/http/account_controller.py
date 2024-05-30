@@ -7,7 +7,6 @@ from app.services.delete_account_service import DeleteAccountService
 from app.services.get_accounts_service import GetAccountsService
 from app.services.insert_account_service import InsertAccountService
 from app.services.update_account_service import UpdateAccountService
-from domain.model.account import AccountId
 from infrastructure.acl.dto.account_dto import AccountDto
 from infrastructure.acl.dto.get_all_accounts_dto import GetAllAccountsResponseDto
 from infrastructure.acl.dto.insert_account_request_dto import (
@@ -17,6 +16,8 @@ from infrastructure.acl.dto.update_account_request_dto import (
     UpdateAccountRequestDto,
 )
 from infrastructure.acl.translators.account_dto_translator import AccountDtoTranslator
+from infrastructure.acl.translators.delete_account_request_dto_translator import DeleteAccountRequestDtoTranslator
+from infrastructure.acl.translators.get_accounts_request_dto_translator import GetAccountByIdRequestDtoTranslator
 from infrastructure.acl.translators.get_all_accounts_response_dto_translator import (
     GetAllAccountsDtoTranslator,
 )
@@ -26,6 +27,8 @@ from infrastructure.acl.translators.insert_account_request_dto_translator import
 from infrastructure.acl.translators.update_account_request_dto_translator import (
     UpdateAccountRequestDtoTranslator,
 )
+
+ACCOUNT_PATH = "/{account_id}"
 
 
 class AccountController:
@@ -54,9 +57,9 @@ class AccountController:
 
         self.router.add_api_route("/", self.insert, methods=["POST"])
         self.router.add_api_route("/", self.get_all, methods=["GET"])
-        self.router.add_api_route("/{account_id}", self.get, methods=["GET"])
-        self.router.add_api_route("/{account_id}", self.delete, methods=["DELETE"])
-        self.router.add_api_route("/{account_id}", self.update, methods=["PUT"])
+        self.router.add_api_route(ACCOUNT_PATH, self.get, methods=["GET"])
+        self.router.add_api_route(ACCOUNT_PATH, self.delete, methods=["DELETE"])
+        self.router.add_api_route(ACCOUNT_PATH, self.update, methods=["PUT"])
 
     async def insert(self, request: InsertAccountRequestDto) -> AccountDto:
         insert_account = InsertAccountRequestDtoTranslator.of(request)
@@ -68,11 +71,13 @@ class AccountController:
         return GetAllAccountsDtoTranslator.of(accounts)
 
     async def get(self, account_id: UUID) -> AccountDto | None:
-        account = self.__get_accounts_service.get(AccountId(account_id))
+        get_by_id = GetAccountByIdRequestDtoTranslator.of(account_id)
+        account = self.__get_accounts_service.get(get_by_id)
         return AccountDtoTranslator.of(account)
 
     async def delete(self, account_id: UUID) -> AccountDto:
-        account = self.__delete_account_service.delete(AccountId(account_id))
+        delete_account = DeleteAccountRequestDtoTranslator.of(account_id)
+        account = self.__delete_account_service.delete(delete_account)
         return AccountDtoTranslator.of(account)
 
     async def update(self, request: UpdateAccountRequestDto) -> AccountDto:

@@ -28,3 +28,11 @@ jobs:
 
       - name: Run linter
         run: lint-imports
+
+  security_checks:
+    runs-on: ubuntu-latest
+    name: Execute the pycharm-security action
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run PyCharm Security
+        uses: tonybaloney/pycharm-security@master
