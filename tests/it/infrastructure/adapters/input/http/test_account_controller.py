@@ -17,7 +17,7 @@ def test_given_no_accounts_when_listing_all_should_return_empty_list(
 def test_given_an_inserted_account_when_listing_all_should_return_a_non_empty_list(
     application: TestClient,
 ):
-    request = InsertAccountRequestDtoFactory()
+    request = InsertAccountRequestDtoFactory.create()
 
     response = application.post("/accounts", json=request.model_dump())
     list_response = application.get("/accounts")
@@ -30,7 +30,7 @@ def test_given_an_inserted_account_when_listing_all_should_return_a_non_empty_li
 def test_given_an_existing_account_when_deleting_should_return_ok(
     application: TestClient,
 ):
-    insert_request = InsertAccountRequestDtoFactory()
+    insert_request = InsertAccountRequestDtoFactory.create()
     insert_response = application.post("/accounts", json=insert_request.model_dump())
 
     list_response = application.get("/accounts")

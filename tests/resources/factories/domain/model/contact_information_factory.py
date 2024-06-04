@@ -1,7 +1,7 @@
 import factory
 from faker import Faker
 
-from domain.model.contact_information import ContactInformation
+from src.domain.model.contact_information import ContactInformation
 
 fake = Faker()
 

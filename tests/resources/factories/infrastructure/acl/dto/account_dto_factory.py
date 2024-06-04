@@ -1,9 +1,10 @@
 import uuid
 
 import factory
+from factory import SubFactory
 from faker import Faker
 
-from infrastructure.acl.dto.account_dto import ContactInformationDto, AccountDto
+from src.infrastructure.acl.dto.account_dto import ContactInformationDto, AccountDto
 
 fake = Faker()
 
@@ -21,4 +22,4 @@ class AccountDtoFactory(factory.Factory):
         model = AccountDto
 
     id = uuid.uuid4()
-    contact_information = factory.SubFactory(ContactInformationDtoFactory)
+    contact_information: SubFactory = SubFactory(ContactInformationDtoFactory)
