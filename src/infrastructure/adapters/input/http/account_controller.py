@@ -15,7 +15,9 @@ from src.infrastructure.acl.dto.insert_account_request_dto import (
 from src.infrastructure.acl.dto.update_account_request_dto import (
     UpdateAccountRequestDto,
 )
-from src.infrastructure.acl.translators.account_dto_translator import AccountDtoTranslator
+from src.infrastructure.acl.translators.account_dto_translator import (
+    AccountDtoTranslator,
+)
 from src.infrastructure.acl.translators.delete_account_request_dto_translator import (
     DeleteAccountRequestDtoTranslator,
 )
