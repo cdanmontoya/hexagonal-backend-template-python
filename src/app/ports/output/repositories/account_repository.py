@@ -1,10 +1,9 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
-from src.app.ports.output.repositories.repository import Repository
 from src.domain.model.account import Account, AccountId
 
 
-class AccountRepository(Repository):
+class AccountRepository(ABC):
     @abstractmethod
     def get(self, key: AccountId) -> Account | None:
         raise NotImplementedError

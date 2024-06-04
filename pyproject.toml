@@ -25,6 +25,7 @@ mypy = "^1.10.0"
 testcontainers = { extras = ["postgres"], version = "^4.4.1" }
 import-linter = "^2.0"
 toml = "^0.10.2"
+types-factory-boy = "^0.4.1"
 
 [build-system]
 requires = ["poetry-core"]

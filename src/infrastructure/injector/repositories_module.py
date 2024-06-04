@@ -10,4 +10,4 @@ from src.infrastructure.adapters.output.repositories.account_repository_dict imp
 
 class RepositoriesModule(Module):
     def configure(self, binder: Binder) -> None:
-        binder.bind(AccountRepository, AccountRepositoryDict)
+        binder.bind(interface=AccountRepository, to=AccountRepositoryDict)  # type: ignore

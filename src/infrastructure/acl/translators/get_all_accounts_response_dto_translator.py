@@ -10,4 +10,5 @@ class GetAllAccountsDtoTranslator:
     @staticmethod
     def of(accounts: list[Account]) -> GetAllAccountsResponseDto:
         dtos = [AccountDtoTranslator.of(account) for account in accounts]
-        return GetAllAccountsResponseDto(accounts=dtos)
+        filtered_dtos = [dto for dto in dtos if dto is not None]
+        return GetAllAccountsResponseDto(accounts=filtered_dtos)

@@ -1602,6 +1602,21 @@ shellingham = ">=1.3.0"
 typing-extensions = ">=3.7.4.3"
 
 [[package]]
+name = "types-factory-boy"
+version = "0.4.1"
+description = "Typing stubs for factory-boy"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "types_factory_boy-0.4.1-py3-none-any.whl", hash = "sha256:a1fa265fad8b24ddf2d4363227d675d0c4cd44951b71d68ea8fc58aa90b0f85d"},
+    {file = "types_factory_boy-0.4.1.tar.gz", hash = "sha256:275b9e17a6ad79992bec77b956bb707770f7b0256e4172265e2139e48faf6faf"},
+]
+
+[package.dependencies]
+factory-boy = ">=3.2.0"
+typing-extensions = ">=4.2.0,<5.0.0"
+
+[[package]]
 name = "typing-extensions"
 version = "4.11.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -2035,4 +2050,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "279f6fe81ffccda894c0e799b286b3f3e8a60e7406e80acbcca2c5c5fd6960a5"
+content-hash = "3bcbc61c070df42bd24f1e1561edda1aef5c035b6552716f23b998399cafae88"

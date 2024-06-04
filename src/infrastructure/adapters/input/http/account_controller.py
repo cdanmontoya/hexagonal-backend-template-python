@@ -67,7 +67,7 @@ class AccountController:
         self.router.add_api_route(ACCOUNT_PATH, self.delete, methods=["DELETE"])
         self.router.add_api_route(ACCOUNT_PATH, self.update, methods=["PUT"])
 
-    async def insert(self, request: InsertAccountRequestDto) -> AccountDto:
+    async def insert(self, request: InsertAccountRequestDto) -> AccountDto | None:
         insert_account = InsertAccountRequestDtoTranslator.of(request)
         account = self.__insert_account_service.insert(insert_account)
         return AccountDtoTranslator.of(account)
@@ -81,12 +81,12 @@ class AccountController:
         account = self.__get_accounts_service.get(get_by_id)
         return AccountDtoTranslator.of(account)
 
-    async def delete(self, account_id: UUID) -> AccountDto:
+    async def delete(self, account_id: UUID) -> AccountDto | None:
         delete_account = DeleteAccountRequestDtoTranslator.of(account_id)
         account = self.__delete_account_service.delete(delete_account)
         return AccountDtoTranslator.of(account)
 
-    async def update(self, request: UpdateAccountRequestDto) -> AccountDto:
+    async def update(self, request: UpdateAccountRequestDto) -> AccountDto | None:
         update_account = UpdateAccountRequestDtoTranslator.of(request)
         account = self.__update_account_service.update(update_account)
         return AccountDtoTranslator.of(account)
