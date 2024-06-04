@@ -1,17 +1,18 @@
 import uvicorn
 from fastapi import FastAPI
+from injector import Injector
 
 from infrastructure.adapters.input.http.account_controller import (
     AccountController,
 )
-from infrastructure.injector.injector import injector
+from infrastructure.injector.injector import create_injector
 
 
 class Application:
     __account_controller: AccountController
 
-    def __init__(self, account_controller: AccountController) -> None:
-        self.__account_controller = account_controller
+    def __init__(self, injector: Injector) -> None:
+        self.__account_controller = injector.get(AccountController)
 
     def create_app(self) -> FastAPI:
         application = FastAPI()
@@ -20,7 +21,7 @@ class Application:
         return application
 
 
-app = Application(injector.get(AccountController)).create_app()
+app = Application(create_injector()).create_app()
 
 if __name__ == "__main__":
     uvicorn.run(

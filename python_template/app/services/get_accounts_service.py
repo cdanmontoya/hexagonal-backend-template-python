@@ -3,7 +3,8 @@ from injector import inject
 from app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
-from domain.model.account import Account, AccountId
+from app.queries.get_account_by_id import GetAccountById
+from domain.model.account import Account
 
 
 class GetAccountsService:
@@ -13,8 +14,8 @@ class GetAccountsService:
     def __init__(self, account_repository: AccountRepository) -> None:
         self.__account_repository = account_repository
 
-    def get(self, key: AccountId) -> Account | None:
-        return self.__account_repository.get(key)
+    def get(self, get_account: GetAccountById) -> Account | None:
+        return self.__account_repository.get(get_account.account_id)
 
     def get_all(self) -> list[Account]:
         return self.__account_repository.get_all()

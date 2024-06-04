@@ -7,4 +7,6 @@ from infrastructure.injector.repositories_module import (
     RepositoriesModule,
 )
 
-injector = Injector([RepositoriesModule, ApplicationServicesModule])
+
+def create_injector() -> Injector:
+    return Injector([RepositoriesModule, ApplicationServicesModule])

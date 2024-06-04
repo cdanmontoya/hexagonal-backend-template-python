@@ -1,4 +1,4 @@
-from abc import abstractmethod, ABC
+from abc import abstractmethod
 
 from app.ports.output.repositories.repository import Repository
 from domain.model.account import Account, AccountId
