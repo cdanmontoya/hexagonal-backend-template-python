@@ -2,9 +2,9 @@ import uuid
 
 import pytest
 
-from app.ports.output.repositories.account_repository import AccountRepository
-from domain.model.account import AccountId
-from infrastructure.adapters.output.repositories.account_repository_dict import (
+from src.app.ports.output.repositories.account_repository import AccountRepository
+from src.domain.model.account import AccountId
+from src.infrastructure.adapters.output.repositories.account_repository_dict import (
     AccountRepositoryDict,
 )
 from tests.resources.factories.domain.model.account_factory import AccountFactory

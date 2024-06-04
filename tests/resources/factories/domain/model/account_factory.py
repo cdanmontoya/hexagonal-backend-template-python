@@ -2,7 +2,7 @@ import uuid
 
 import factory
 
-from domain.model.account import Account, AccountId
+from src.domain.model.account import Account, AccountId
 from tests.resources.factories.domain.model.contact_information_factory import (
     ContactInformationFactory,
 )

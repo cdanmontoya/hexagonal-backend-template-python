@@ -19,14 +19,13 @@
 
 # Run locally
 ```bash
-cd python_template
-uvicorn infrastructure.adapters.input.http.application:app --host 0.0.0.0 --port 15000 --reload
+uvicorn src.infrastructure.adapters.input.http.application:app --host 0.0.0.0 --port 15000 --reload
 ```
 
 # Tests
 
 ```bash
-coverage run --source=python_template -m pytest tests
+coverage run --source=src -m pytest tests
 coverage report
 coverage html
 ```

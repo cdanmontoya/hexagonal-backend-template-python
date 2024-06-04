@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: psf/black@stable
         with:
-          src: python_template
+          src: src
 
   architecture:
     runs-on: ubuntu-latest

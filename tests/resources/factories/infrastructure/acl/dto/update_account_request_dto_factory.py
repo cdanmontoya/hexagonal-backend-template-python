@@ -3,7 +3,7 @@ from uuid import uuid4
 import factory
 from faker import Faker
 
-from infrastructure.acl.dto.update_account_request_dto import UpdateAccountRequestDto
+from src.infrastructure.acl.dto.update_account_request_dto import UpdateAccountRequestDto
 
 fake = Faker()
 
