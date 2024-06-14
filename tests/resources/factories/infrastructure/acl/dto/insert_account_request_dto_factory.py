@@ -12,5 +12,5 @@ class InsertAccountRequestDtoFactory(factory.Factory):
     class Meta:
         model = InsertAccountRequestDto
 
-    email = fake.email()
+    email = fake.email(domain="email.com")
     cellphones = [fake.phone_number()]
