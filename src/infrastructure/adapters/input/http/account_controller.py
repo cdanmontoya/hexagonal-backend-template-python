@@ -7,6 +7,7 @@ from src.app.services.delete_account_service import DeleteAccountService
 from src.app.services.get_accounts_service import GetAccountsService
 from src.app.services.insert_account_service import InsertAccountService
 from src.app.services.update_account_service import UpdateAccountService
+from src.domain.error import Error
 from src.infrastructure.acl.dto.account_dto import AccountDto
 from src.infrastructure.acl.dto.get_all_accounts_dto import GetAllAccountsResponseDto
 from src.infrastructure.acl.dto.insert_account_request_dto import (
@@ -67,19 +68,27 @@ class AccountController:
         self.router.add_api_route(ACCOUNT_PATH, self.delete, methods=["DELETE"])
         self.router.add_api_route(ACCOUNT_PATH, self.update, methods=["PUT"])
 
-    async def insert(self, request: InsertAccountRequestDto) -> AccountDto | None:
+    async def insert(self, request: InsertAccountRequestDto) -> AccountDto | Error:
         insert_account = InsertAccountRequestDtoTranslator.of(request)
-        account = self.__insert_account_service.insert(insert_account)
-        return AccountDtoTranslator.of(account)
+        account_result = self.__insert_account_service.insert(insert_account)
+
+        if isinstance(account_result, Error):
+            return account_result
+        else:
+            return AccountDtoTranslator.of(account_result)
 
     async def get_all(self) -> GetAllAccountsResponseDto:
         accounts = self.__get_accounts_service.get_all()
         return GetAllAccountsDtoTranslator.of(accounts)
 
-    async def get(self, account_id: UUID) -> AccountDto | None:
+    async def get(self, account_id: UUID) -> AccountDto | Error:
         get_by_id = GetAccountByIdRequestDtoTranslator.of(account_id)
-        account = self.__get_accounts_service.get(get_by_id)
-        return AccountDtoTranslator.of(account)
+        account_result = self.__get_accounts_service.get(get_by_id)
+
+        if not account_result:
+            return Error("Account not found")
+        else:
+            return AccountDtoTranslator.of(account_result)
 
     async def delete(self, account_id: UUID) -> AccountDto | None:
         delete_account = DeleteAccountRequestDtoTranslator.of(account_id)

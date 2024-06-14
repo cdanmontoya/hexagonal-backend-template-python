@@ -10,5 +10,5 @@ class ContactInformationFactory(factory.Factory):
     class Meta:
         model = ContactInformation
 
-    email = fake.email()
+    email = fake.email(domain="email.com")
     cellphones = [fake.phone_number()]
