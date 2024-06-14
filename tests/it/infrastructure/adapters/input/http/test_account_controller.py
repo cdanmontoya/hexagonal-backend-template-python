@@ -1,3 +1,5 @@
+import uuid
+
 from starlette.testclient import TestClient
 
 from tests.resources.factories.infrastructure.acl.dto.insert_account_request_dto_factory import (
@@ -12,6 +14,14 @@ def test_given_no_accounts_when_listing_all_should_return_empty_list(
     response = application.get("/accounts")
     assert response.status_code == 200
     assert response.json()["accounts"] == []
+
+
+def test_given_no_accounts_when_finding_one_should_return_not_found(
+    application: TestClient,
+):
+    response = application.get(f"/accounts/{uuid.uuid4()}")
+    assert response.status_code == 200
+    assert response.json()["message"] == "Account not found"
 
 
 def test_given_an_inserted_account_when_listing_all_should_return_a_non_empty_list(
