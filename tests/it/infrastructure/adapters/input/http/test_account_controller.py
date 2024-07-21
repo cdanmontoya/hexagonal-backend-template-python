@@ -41,7 +41,7 @@ def test_given_an_existing_account_when_deleting_should_return_ok(
     application: TestClient,
 ):
     insert_request = InsertAccountRequestDtoFactory.create()
-    insert_response = application.post("/accounts", json=insert_request.model_dump())
+    application.post("/accounts", json=insert_request.model_dump())
 
     list_response = application.get("/accounts")
     account_id = list_response.json()["accounts"][0]["id"]
