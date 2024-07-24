@@ -8,11 +8,12 @@ packages = [{ include = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = "^0.111.0"
-pydantic = "^2.7.3"
-sqlalchemy = "^2.0.30"
+fastapi = "^0.111.1"
+pydantic = "^2.8.2"
+sqlalchemy = "^2.0.31"
 psycopg2-binary = "^2.9.9"
-injector = "^0.21.0"
+injector = "^0.22.0"
+alembic = "^1.13.2"
 
 
 [tool.poetry.group.dev.dependencies]
