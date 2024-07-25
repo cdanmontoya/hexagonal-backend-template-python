@@ -1,8 +1,6 @@
-from uuid import UUID
-
 from src.domain.model.account import Account, AccountId
 from src.domain.model.contact_information import ContactInformation
-from src.infrastructure.adapters.output.repositories.accounts.sqlite.account_model import (
+from src.infrastructure.adapters.output.repositories.accounts.sqlalchemy.account_model import (
     AccountDao,
     CellphoneDao,
 )
@@ -13,7 +11,7 @@ class AccountMapper:
     @staticmethod
     def from_account(account: Account) -> AccountDao:
         return AccountDao(
-            id=str(account.id.id),
+            id=account.id.id,
             email=account.contact_information.email,
             cellphones=[
                 CellphoneDao(cellphone=cellphone)
@@ -29,5 +27,5 @@ class AccountMapper:
         )
 
         return Account(
-            id=AccountId(UUID(account_dao.id)), contact_information=contact_information
+            id=AccountId(account_dao.id), contact_information=contact_information
         )

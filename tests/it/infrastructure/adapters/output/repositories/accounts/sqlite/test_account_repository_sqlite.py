@@ -21,9 +21,7 @@ def repository() -> AccountRepository:
 
 
 @pytest.mark.usefixtures("clear_db_fixture")
-def test_given_an_user_should_insert_correctly(
-    repository: AccountRepository
-):
+def test_given_an_user_should_insert_correctly(repository: AccountRepository):
     account = AccountFactory.create()
 
     repository.insert(account)
@@ -34,9 +32,7 @@ def test_given_an_user_should_insert_correctly(
 
 
 @pytest.mark.usefixtures("clear_db_fixture")
-def test_given_an_user_should_delete_correctly(
-    repository: AccountRepository
-):
+def test_given_an_user_should_delete_correctly(repository: AccountRepository):
     account = AccountFactory.create()
 
     repository.insert(account)
@@ -48,9 +44,7 @@ def test_given_an_user_should_delete_correctly(
 
 
 @pytest.mark.usefixtures("clear_db_fixture")
-def test_given_an_user_should_update_email_correctly(
-    repository: AccountRepository
-):
+def test_given_an_user_should_update_email_correctly(repository: AccountRepository):
     account_id = AccountId(uuid.uuid4())
     old_contact = ContactInformationFactory(email="old@email.com")
     new_contact = ContactInformationFactory(email="new@email.com")

@@ -1,9 +1,11 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 
 import uvicorn
 from alembic import command
 from alembic.config import Config
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from injector import Injector
 
@@ -12,9 +14,11 @@ from src.infrastructure.adapters.input.http.account_controller import (
 )
 from src.infrastructure.injector.injector import create_injector
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("uvicorn")
+
 
 class Application:
-    log = logging.getLogger("uvicorn")
     __account_controller: AccountController
 
     def __init__(self, injector: Injector) -> None:
@@ -27,14 +31,16 @@ class Application:
 
     @asynccontextmanager
     async def lifespan(self, app_: FastAPI):
-        self.log.info("Starting up...")
-        self.log.info("run alembic upgrade head...")
+        # TODO: improve the lifespan method to ensure all logs are shown
+        logger.info("Starting up...")
+        logger.info("run alembic upgrade head...")
         self.__run_migrations()
         yield
-        self.log.info("Shutting down...")
+        logger.info("Shutting down...")
 
     def create_app(self) -> FastAPI:
-        application = FastAPI(lifespan=self.lifespan)
+        #application = FastAPI(lifespan=self.lifespan)
+        application = FastAPI()
         application.include_router(self.__account_controller.router)
 
         return application
@@ -43,9 +49,10 @@ class Application:
 app = Application(create_injector()).create_app()
 
 if __name__ == "__main__":
+    load_dotenv()
     uvicorn.run(
         "src.infrastructure.adapters.input.http.application:app",
-        port=15000,
+        port=int(os.getenv("APP_PORT", 8080)),
         host="0.0.0.0",
         reload=True,
     )

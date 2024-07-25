@@ -8,17 +8,18 @@ from src.app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
 from src.domain.model.account import Account, AccountId
-from src.infrastructure.adapters.output.repositories.accounts.sqlite.account_mapper import (
+from src.infrastructure.adapters.output.repositories.accounts.sqlalchemy.account_mapper import (
     AccountMapper,
 )
-from src.infrastructure.adapters.output.repositories.accounts.sqlite.account_model import (
+from src.infrastructure.adapters.output.repositories.accounts.sqlalchemy.account_model import (
     Base,
     AccountDao,
+    CellphoneDao,
 )
 
 
 @singleton
-class AccountRepositorySQLite(AccountRepository):
+class AccountRepositorySQLAlchemy(AccountRepository):
     __engine: Engine
 
     @inject
@@ -54,12 +55,24 @@ class AccountRepositorySQLite(AccountRepository):
         return account
 
     @override
-    def update(self, key: AccountId, account: Account) -> Account: ...
+    def update(self, key: AccountId, account: Account) -> Account:
+        session = Session(self.__engine)
+        account_dao = session.get(AccountDao, key.id)
+
+        if account_dao:
+            account_dao.email = account.contact_information.email
+            account_dao.cellphones = [
+                CellphoneDao(cellphone=phone)
+                for phone in account.contact_information.cellphones
+            ]
+            session.commit()
+
+        return account
 
     @override
     def delete(self, key: AccountId) -> Account:
         session = Session(self.__engine)
-        account_dao = session.get(AccountDao, str(key.id))
+        account_dao = session.get(AccountDao, key.id)
 
         if account_dao:
             account = AccountMapper.from_account_dao(account_dao)

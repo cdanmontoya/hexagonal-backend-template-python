@@ -25,26 +25,25 @@ goal is to achieve a decoupled implementation that keeps the business knowledge 
 abstractions and services in the `domain` and `app` packages, and the concrete implementations and details that depend on external systems or third-party 
 software in the `infrastructure` package.
 
-
 ```text
 .
 ├── src/
 │   ├── app/                        # Defines the application behavior
 │   │   ├── commands/                   # Holds the data required to execute operations that write into the system
 │   │   ├── queries/                    # Holds the data required to execute operations that read data from the system
-│   │   ├── use_cases/                  # Implements the bussiness logic
+│   │   ├── use_cases/                  # Implements the business logic
 │   │   └── ports/                      # Defines abstractions to interact with external systems
 │   │       └── output/                  
-│   ├── domain/                     # Represents the bussiness knowledge and understanding
-│   │   ├── model/                      # Defines relevant bussiness entities and their operations
+│   ├── domain/                     # Represents the business knowledge and understanding
+│   │   ├── model/                      # Defines relevant business entities and their operations
 │   │   ├── services/                   # Implements logic that involves several entities
 │   │   └── events/                     # Holds information about the facts that happened on the system
 │   └── infrastructure/
-│       ├── acl/                    # Anticorruption layer that aims to keep the domain isolated from external systems
-│       │   ├── dto/                    # Data transfer objects for both input and outupt
+│       ├── acl/                    # Anti corruption layer that aims to keep the domain isolated from external systems
+│       │   ├── dto/                    # Data transfer objects for both input and output
 │       │   └── translators/            # Translates DTOs into commands, queries and domain entities, and vice-versa
 │       ├── adapters/               # Concrete implementations depending on frameworks and particular technologies
-│       │   ├── input/                  # Input adapters that recieve interactions from external systems using different protocols
+│       │   ├── input/                  # Input adapters that receive interactions from external systems using different protocols
 │       │   │   ├── events/
 │       │   │   └── http/
 │       │   └── output/                 # Output adapters that call external systems
@@ -52,12 +51,12 @@ software in the `infrastructure` package.
 │       └── migrations/             # Database schema evolutions configuration
 └── test/
     ├── unit/
-    │   └── ...          # Both unit and integration tests mimic the same folder structure as the src/ folder, but only for the required files
+    │   └── ...                     # Both unit and integration tests mimic the same folder structure as the src/ folder, but only for the required files
     ├── it/
     │   └── ...
     └── resources/
-        ├── factories/
-        └── fixtures/
+        ├── factories/              # Factories to generate domain-compliant data
+        └── fixtures/               # Useful fixtures for easier testing
 ```
 
 
@@ -65,7 +64,7 @@ software in the `infrastructure` package.
 
 ## Dependency management
 The project suggests to use [Poetry](https://python-poetry.org) as the dependency management tool. Once installed, you can 
-create a virtual environment for this project running the following commands.
+create a virtual environment for this project running the following commands
 
 ```bash
 poetry shell
@@ -82,14 +81,54 @@ poetry add --group dev <dependency> # for development-only dependencies
 ## Database management
 ### Local instance
 
-### Evolving the schema
+The database access is done with [SQLAlchemy](https://www.sqlalchemy.org), which provides a rich and powerful ORM. My
+preferred database management system is Postgres, which can be installed locally for development purposes using the 
+provided docker-compose file.
+
+```bash
+docker compose up -d 
+```
+
+For even light-weighter development, you can switch from Postgres to SQLite by just changing the DB_URL to the corresponding
+engine, SQLAlchemy will handle the rest.
+
+
+### Schema migrations
+The migrations are managed by [Alembic](https://alembic.sqlalchemy.org/en/latest/), which works on top of SQLAlchemy.
+To create a new evolution, run
+
+```bash
+alembic revision -m "descriptive name of the evolution"
+```
+
+This will generate a new file in the `src/infrastructure/migrations/versions` folder. There you'll have to implement the upgrade
+and downgrade evolution code. I prefer using plain SQL. Then, the evolutions can be applied running
+
+```bash
+alembic upgrade head
+```
+The application server is configured to apply the migrations up to the latest revision on every startup.
+
+**WARNING:** Do not change the code of an already applied evolution on productive environments.
+
+
 
 ## Run locally
 ```bash
 uvicorn src.infrastructure.adapters.input.http.application:app --host 0.0.0.0 --port 15000 --reload
 ```
 
-## Tests
+.env
+```dotenv
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=dbuser
+DB_PASS=dbpassword
+DB_DATABASE=python_template
+DB_URL=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}
+```
+
+## Testing
 
 ### Run all in a single command
 ```bash
@@ -109,7 +148,9 @@ coverage xml -i
 coverge combine # To merge both coverage reports
 ```
 
+# Developing a new feature
 
+# Deploying 
 
 # References and further readings
 
