@@ -1,26 +1,25 @@
 import uuid
 
 import pytest
+from sqlalchemy import Engine
 
 from src.app.ports.output.repositories.account_repository import AccountRepository
 from src.domain.model.account import AccountId
-from src.infrastructure.adapters.output.repositories.accounts.sqlite.account_repository_sqlite import (
-    AccountRepositorySQLite,
+from src.infrastructure.adapters.output.repositories.accounts.sqlalchemy.account_repository_sqlalchemy import (
+    AccountRepositorySQLAlchemy,
 )
-from src.infrastructure.injector.database_module import DatabaseModule
 from tests.resources.factories.domain.model.account_factory import AccountFactory
 from tests.resources.factories.domain.model.contact_information_factory import (
     ContactInformationFactory,
 )
+from tests.resources.fixtures.database_fixture import db, postgres_container
 
 
 @pytest.fixture
-def repository() -> AccountRepository:
-    engine = DatabaseModule().sqlite_database()
-    return AccountRepositorySQLite(engine)
+def repository(db: Engine) -> AccountRepository:
+    return AccountRepositorySQLAlchemy(db)
 
 
-@pytest.mark.usefixtures("clear_db_fixture")
 def test_given_an_user_should_insert_correctly(repository: AccountRepository):
     account = AccountFactory.create()
 
@@ -31,7 +30,6 @@ def test_given_an_user_should_insert_correctly(repository: AccountRepository):
     assert account.id.id == inserted_account.id.id
 
 
-@pytest.mark.usefixtures("clear_db_fixture")
 def test_given_an_user_should_delete_correctly(repository: AccountRepository):
     account = AccountFactory.create()
 
@@ -43,7 +41,6 @@ def test_given_an_user_should_delete_correctly(repository: AccountRepository):
     assert deleted_account is None
 
 
-@pytest.mark.usefixtures("clear_db_fixture")
 def test_given_an_user_should_update_email_correctly(repository: AccountRepository):
     account_id = AccountId(uuid.uuid4())
     old_contact = ContactInformationFactory(email="old@email.com")

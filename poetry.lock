@@ -51,6 +51,30 @@ test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypo
 trio = ["trio (>=0.23)"]
 
 [[package]]
+name = "bandit"
+version = "1.7.9"
+description = "Security oriented static analyser for python code."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "bandit-1.7.9-py3-none-any.whl", hash = "sha256:52077cb339000f337fb25f7e045995c4ad01511e716e5daac37014b9752de8ec"},
+    {file = "bandit-1.7.9.tar.gz", hash = "sha256:7c395a436743018f7be0a4cbb0a4ea9b902b6d87264ddecf8cfdc73b4f78ff61"},
+]
+
+[package.dependencies]
+colorama = {version = ">=0.3.9", markers = "platform_system == \"Windows\""}
+PyYAML = ">=5.3.1"
+rich = "*"
+stevedore = ">=1.20.0"
+
+[package.extras]
+baseline = ["GitPython (>=3.1.30)"]
+sarif = ["jschema-to-python (>=1.2.3)", "sarif-om (>=1.0.4)"]
+test = ["beautifulsoup4 (>=4.8.0)", "coverage (>=4.5.4)", "fixtures (>=3.0.0)", "flake8 (>=4.0.0)", "pylint (==1.9.4)", "stestr (>=2.5.0)", "testscenarios (>=0.5.0)", "testtools (>=2.3.0)"]
+toml = ["tomli (>=1.1.0)"]
+yaml = ["PyYAML"]
+
+[[package]]
 name = "black"
 version = "24.4.2"
 description = "The uncompromising code formatter."
@@ -955,6 +979,17 @@ files = [
 ]
 
 [[package]]
+name = "pbr"
+version = "6.0.0"
+description = "Python Build Reasonableness"
+optional = false
+python-versions = ">=2.6"
+files = [
+    {file = "pbr-6.0.0-py2.py3-none-any.whl", hash = "sha256:4a7317d5e3b17a3dccb6a8cfe67dab65b20551404c52c8ed41279fa4f0cb4cda"},
+    {file = "pbr-6.0.0.tar.gz", hash = "sha256:d1377122a5a00e2f940ee482999518efe16d745d423a670c27773dfbc3c9a7d9"},
+]
+
+[[package]]
 name = "platformdirs"
 version = "4.2.2"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
@@ -1350,20 +1385,20 @@ files = [
 
 [[package]]
 name = "requests"
-version = "2.32.1"
+version = "2.29.0"
 description = "Python HTTP for Humans."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.7"
 files = [
-    {file = "requests-2.32.1-py3-none-any.whl", hash = "sha256:21ac9465cdf8c1650fe1ecde8a71669a93d4e6f147550483a2967d08396a56a5"},
-    {file = "requests-2.32.1.tar.gz", hash = "sha256:eb97e87e64c79e64e5b8ac75cee9dd1f97f49e289b083ee6be96268930725685"},
+    {file = "requests-2.29.0-py3-none-any.whl", hash = "sha256:e8f3c9be120d3333921d213eef078af392fba3933ab7ed2d1cba3b56f2568c3b"},
+    {file = "requests-2.29.0.tar.gz", hash = "sha256:f2e34a75f4749019bb0e3effb66683630e4ffeaf75819fb51bebef1bf5aef059"},
 ]
 
 [package.dependencies]
 certifi = ">=2017.4.17"
 charset-normalizer = ">=2,<4"
 idna = ">=2.5,<4"
-urllib3 = ">=1.21.1,<3"
+urllib3 = ">=1.21.1,<1.27"
 
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
@@ -1525,14 +1560,28 @@ anyio = ">=3.4.0,<5"
 full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7)", "pyyaml"]
 
 [[package]]
+name = "stevedore"
+version = "5.2.0"
+description = "Manage dynamic plugins for Python applications"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "stevedore-5.2.0-py3-none-any.whl", hash = "sha256:1c15d95766ca0569cad14cb6272d4d31dae66b011a929d7c18219c176ea1b5c9"},
+    {file = "stevedore-5.2.0.tar.gz", hash = "sha256:46b93ca40e1114cea93d738a6c1e365396981bb6bb78c27045b7587c9473544d"},
+]
+
+[package.dependencies]
+pbr = ">=2.0.0,<2.1.0 || >2.1.0"
+
+[[package]]
 name = "testcontainers"
-version = "4.4.1"
+version = "4.7.2"
 description = "Python library for throwaway instances of anything that can run in a Docker container"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "testcontainers-4.4.1-py3-none-any.whl", hash = "sha256:0ab41538d363576c30dcb9064bf50736d310da4ff99a8ab4f58bee9ac9e44cc6"},
-    {file = "testcontainers-4.4.1.tar.gz", hash = "sha256:fdc9e6cfb6f4b2d4ecf1f7ff286c76283cd5fe0f91f71baf9817f505fa14575d"},
+    {file = "testcontainers-4.7.2-py3-none-any.whl", hash = "sha256:23b13cf8078f615a08c75197f227796d90c46df92d2b282ae7c39b1fc1a9c9ed"},
+    {file = "testcontainers-4.7.2.tar.gz", hash = "sha256:9976b1cdcdeb9feeae6a477073e7c8b02cd40ea44f1daa34b5da6d2c918dff0d"},
 ]
 
 [package.dependencies]
@@ -1546,11 +1595,14 @@ arangodb = ["python-arango (>=7.8,<8.0)"]
 azurite = ["azure-storage-blob (>=12.19,<13.0)"]
 chroma = ["chromadb-client"]
 clickhouse = ["clickhouse-driver"]
+cosmosdb = ["azure-cosmos"]
+generic = ["httpx"]
 google = ["google-cloud-datastore (>=2)", "google-cloud-pubsub (>=2)"]
 influxdb = ["influxdb", "influxdb-client"]
 k3s = ["kubernetes", "pyyaml"]
 keycloak = ["python-keycloak"]
 localstack = ["boto3"]
+mailpit = ["cryptography"]
 minio = ["minio"]
 mongodb = ["pymongo"]
 mssql = ["pymssql", "sqlalchemy"]
@@ -1565,6 +1617,9 @@ rabbitmq = ["pika"]
 redis = ["redis"]
 registry = ["bcrypt"]
 selenium = ["selenium"]
+sftp = ["cryptography"]
+test-module-import = ["httpx"]
+trino = ["trino"]
 weaviate = ["weaviate-client (>=4.5.4,<5.0.0)"]
 
 [[package]]
@@ -1623,20 +1678,19 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "2.2.1"
+version = "1.26.19"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
-python-versions = ">=3.8"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,>=2.7"
 files = [
-    {file = "urllib3-2.2.1-py3-none-any.whl", hash = "sha256:450b20ec296a467077128bff42b73080516e71b56ff59a60a02bef2232c4fa9d"},
-    {file = "urllib3-2.2.1.tar.gz", hash = "sha256:d0570876c61ab9e520d776c38acbbb5b05a776d3f9ff98a5c8fd5162a444cf19"},
+    {file = "urllib3-1.26.19-py2.py3-none-any.whl", hash = "sha256:37a0344459b199fce0e80b0d3569837ec6b6937435c5244e7fd73fa6006830f3"},
+    {file = "urllib3-1.26.19.tar.gz", hash = "sha256:3e3d753a8618b86d7de333b4223005f68720bcd6a7d2bcb9fbd2229ec7c1e429"},
 ]
 
 [package.extras]
-brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
-h2 = ["h2 (>=4,<5)"]
-socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
-zstd = ["zstandard (>=0.18.0)"]
+brotli = ["brotli (==1.0.9)", "brotli (>=1.0.9)", "brotlicffi (>=0.8.0)", "brotlipy (>=0.6.0)"]
+secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "ipaddress", "pyOpenSSL (>=0.14)", "urllib3-secure-extra"]
+socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "uvicorn"
@@ -1957,4 +2011,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "223dbf152a971edc4ec1d7cc16dd5961e081bf46f40bb62ea8fbd1c6353a85a1"
+content-hash = "c6c33e66a6bdd7cbf5debecec9199deaddb53e016d9d4ab09c3118f889c08da3"

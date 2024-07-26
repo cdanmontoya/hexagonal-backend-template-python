@@ -12,5 +12,5 @@ class DatabaseModule(Module):
 
     @singleton
     @provider
-    def sqlite_database(self) -> Engine:
+    def database(self) -> Engine:
         return create_engine(self.path)

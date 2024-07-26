@@ -1,5 +1,3 @@
-import sqlalchemy as sa
-
 from uuid import UUID
 
 from sqlalchemy import String, ForeignKey, types

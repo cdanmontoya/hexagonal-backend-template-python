@@ -58,7 +58,7 @@ software in the `infrastructure` package.
         ├── factories/              # Factories to generate domain-compliant data
         └── fixtures/               # Useful fixtures for easier testing
 ```
-
+TODO: explain the imports linter
 
 # Running the project
 

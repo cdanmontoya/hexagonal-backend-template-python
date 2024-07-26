@@ -14,14 +14,13 @@ from src.infrastructure.adapters.input.http.account_controller import (
 )
 from src.infrastructure.injector.injector import create_injector
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("uvicorn")
-
 
 class Application:
     __account_controller: AccountController
+    __logger: logging.Logger
 
     def __init__(self, injector: Injector) -> None:
+        self.__logger = logging.getLogger(__name__)
         self.__account_controller = injector.get(AccountController)
 
     @staticmethod
@@ -32,14 +31,14 @@ class Application:
     @asynccontextmanager
     async def lifespan(self, app_: FastAPI):
         # TODO: improve the lifespan method to ensure all logs are shown
-        logger.info("Starting up...")
-        logger.info("run alembic upgrade head...")
+        self.__logger.info("Starting up...")
+        self.__logger.info("run alembic upgrade head...")
         self.__run_migrations()
         yield
-        logger.info("Shutting down...")
+        self.__logger.info("Shutting down...")
 
     def create_app(self) -> FastAPI:
-        #application = FastAPI(lifespan=self.lifespan)
+        # application = FastAPI(lifespan=self.lifespan)
         application = FastAPI()
         application.include_router(self.__account_controller.router)
 
