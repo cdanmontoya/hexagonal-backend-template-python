@@ -18,12 +18,12 @@ class Application:
         self.__account_controller = injector.get(AccountController)
 
     @staticmethod
-    def __run_migrations():
+    def __run_migrations() -> None:
         alembic_cfg = Config("alembic.ini")
         command.upgrade(alembic_cfg, "head")
 
     @asynccontextmanager
-    async def lifespan(self, app_: FastAPI):
+    async def lifespan(self, app_: FastAPI) -> None:
         # TODO: improve the lifespan method to ensure all logs are shown
         self.__logger.info("Starting up...")
         self.__logger.info("run alembic upgrade head...")
@@ -32,7 +32,6 @@ class Application:
         self.__logger.info("Shutting down...")
 
     def create_app(self) -> FastAPI:
-        # application = FastAPI(lifespan=self.lifespan)
         application = FastAPI()
         application.include_router(self.__account_controller.router)
 

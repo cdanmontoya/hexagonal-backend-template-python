@@ -32,7 +32,6 @@ def db(postgres_container: PostgresContainer) -> Engine:
     url = postgres_container.get_connection_url()
     engine = create_engine(url, echo=False, future=True)
     yield engine
-    engine.dispose()
 
 
 @fixture(scope="function")
