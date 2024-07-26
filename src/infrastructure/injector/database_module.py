@@ -8,7 +8,7 @@ load_dotenv()
 
 
 class DatabaseModule(Module):
-    path = os.getenv("DB_URL")
+    path = os.getenv("DB_URL", "postgresql://dbuser:dbpassword@localhost:5432/python_template")
 
     @singleton
     @provider
