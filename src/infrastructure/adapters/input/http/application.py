@@ -1,18 +1,12 @@
 import logging
-import os
 from contextlib import asynccontextmanager
 
-import uvicorn
 from alembic import command
 from alembic.config import Config
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from injector import Injector
 
-from src.infrastructure.adapters.input.http.account_controller import (
-    AccountController,
-)
-from src.infrastructure.injector.injector import create_injector
+from src.infrastructure.adapters.input.http.account_controller import AccountController
 
 
 class Application:
@@ -43,15 +37,3 @@ class Application:
         application.include_router(self.__account_controller.router)
 
         return application
-
-
-app = Application(create_injector()).create_app()
-
-if __name__ == "__main__":
-    load_dotenv()
-    uvicorn.run(
-        "src.infrastructure.adapters.input.http.application:app",
-        port=int(os.getenv("APP_PORT", 8080)),
-        host="0.0.0.0",
-        reload=True,
-    )

@@ -115,7 +115,7 @@ The application server is configured to apply the migrations up to the latest re
 
 ## Run locally
 ```bash
-uvicorn src.infrastructure.adapters.input.http.application:app --host 0.0.0.0 --port 15000 --reload
+uvicorn src.infrastructure.adapters.input.http.main:app --host 0.0.0.0 --port 15000 --reload
 ```
 
 .env

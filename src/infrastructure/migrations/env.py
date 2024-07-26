@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 # access to the values within the .ini file in use.
 load_dotenv()
 config = context.config
-config.set_main_option("sqlalchemy.url", os.getenv("DB_URL", "postgresql://dbuser:dbpassword@localhost:5432/python_template"))
+config.set_main_option("sqlalchemy.url", os.getenv("DB_URL"))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
