@@ -1,5 +1,6 @@
 import logging
 from contextlib import asynccontextmanager
+from typing import AsyncGenerator
 
 from alembic import command
 from alembic.config import Config
@@ -23,7 +24,7 @@ class Application:
         command.upgrade(alembic_cfg, "head")
 
     @asynccontextmanager
-    async def lifespan(self, app_: FastAPI) -> None:
+    async def lifespan(self, app_: FastAPI) -> AsyncGenerator:
         # TODO: improve the lifespan method to ensure all logs are shown
         self.__logger.info("Starting up...")
         self.__logger.info("run alembic upgrade head...")
