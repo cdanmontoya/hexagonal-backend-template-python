@@ -24,7 +24,7 @@ class Application:
         command.upgrade(alembic_cfg, "head")
 
     @asynccontextmanager
-    async def lifespan(self, app_: FastAPI) -> AsyncGenerator[None, None, None]:
+    async def lifespan(self, app_: FastAPI) -> AsyncGenerator[None, None]:
         # TODO: improve the lifespan method to ensure all logs are shown
         self.__logger.info("Starting up...")
         self.__logger.info("run alembic upgrade head...")
