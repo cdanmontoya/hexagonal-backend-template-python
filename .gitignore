@@ -244,3 +244,5 @@ cython_debug/
 .python-version
 .import_linter_cache
 .DS_Store
+# SQLite files
+*.db

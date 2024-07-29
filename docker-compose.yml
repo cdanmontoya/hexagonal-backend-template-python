@@ -6,7 +6,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ~/.pgdata/base:/var/lib/postgresql/data
+      - ~/.pgdata/python_template:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=dbpassword
