@@ -58,7 +58,14 @@ software in the `infrastructure` package.
         ├── factories/              # Factories to generate domain-compliant data
         └── fixtures/               # Useful fixtures for easier testing
 ```
-TODO: explain the imports linter
+
+This folder structure is enforced using [import-linter](https://import-linter.readthedocs.io). This allows to check de 
+dependency flow among the architecture layers. The architecture rules are defined in the `pyproject.toml` file and can 
+be run using the command below. There's room for implementing more and more fine-grained rules.
+
+```bash
+lint-imports
+```
 
 # Running the project
 
@@ -114,9 +121,9 @@ The application server is configured to apply the migrations up to the latest re
 
 
 ## Run locally
-```bash
-uvicorn src.infrastructure.adapters.input.http.main:app --host 0.0.0.0 --port 15000 --reload
-```
+There are some environment variables that are required to run the project. These variables are loaded with [python-dotenv](https://github.com/theskumar/python-dotenv)
+and can be provided with a `.env` file at the top-level folder. Bellow is a list of the required environment variables,
+try to keep it updated to make easier the setup process.
 
 .env
 ```dotenv
@@ -128,7 +135,24 @@ DB_DATABASE=python_template
 DB_URL=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}
 ```
 
+Once installed the dependencies and set up dependencies, the application server can be started by
+
+```bash
+uvicorn src.infrastructure.adapters.input.http.main:app --host 0.0.0.0 --port 15000 --reload
+```
+
 ## Testing
+
+The `tests` folder is located on the top-lever folder. There are three main subfolders: `unit` for unit testing, `it` for 
+integration testing, and `resources` for utilities. The main testing framework is [pytest](https://docs.pytest.org/en/stable/), 
+it brings an easy-to-use assertion mechanism and also provides a fixtures feature that allows configuration reusability 
+among tests, these fixtures can be defined at the `resources/fixtures` folder. The other default folder at resources is 
+`resources/factories`, there we can define factories to create valid (or invalid) objects for domain entities or DTOs. The test 
+coverage is provided by [coverage](https://coverage.readthedocs.io/en/7.6.0/) package.
+
+For integration testing, [testcontainers](https://testcontainers.com) provides virtualized infrastructure that can be 
+instantiated on demand for every single test, making easier to make real tests instead of mocked-ones, without the mess 
+of deploying and configuring real testing infrastructure.
 
 ### Run all in a single command
 ```bash
@@ -149,8 +173,9 @@ coverge combine # To merge both coverage reports
 ```
 
 # Developing a new feature
-
+#TODO
 # Deploying 
+#TODO
 
 # References and further readings
 

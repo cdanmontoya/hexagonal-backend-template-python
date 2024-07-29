@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+- [8] `SQLAlchemy` ORM initial setup
+- [14] Architecture rules using `import-linter`
+- [1] Database schema evolutions using `alembic`
+- [29] Environment variables support using `dotenv`
+- [10] Integration tests to PostgreSQL using `testcontainers` 
 
 ## [0.1.0] - 2024-05-20
 ### Added
