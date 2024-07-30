@@ -1,6 +1,8 @@
 import json
 import logging
 
+from src.infrastructure.adapters.input.http.correlation_id.correlation_id import correlation_id_ctx_var
+
 
 class JsonFormatter(logging.Formatter):
     """
@@ -70,5 +72,7 @@ class JsonFormatter(logging.Formatter):
 
         if record.stack_info:
             message_dict["stack_info"] = self.formatStack(record.stack_info)
+
+        message_dict['correlation_id'] = correlation_id_ctx_var.get()
 
         return self.FORMATS.get(record.levelno) + json.dumps(message_dict, default=str) + self.reset
