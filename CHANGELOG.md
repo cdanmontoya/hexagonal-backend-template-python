@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [1] Database schema evolutions using `alembic`
 - [29] Environment variables support using `dotenv`
 - [10] Integration tests to PostgreSQL using `testcontainers` 
+- [16] Custom logger configuration with structured format and colors
+- [33] Correlation ID middleware implementation
 
 ## [0.1.0] - 2024-05-20
 ### Added
