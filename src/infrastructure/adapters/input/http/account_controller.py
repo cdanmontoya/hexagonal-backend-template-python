@@ -1,5 +1,4 @@
 import logging
-from logging import Logger
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -36,7 +35,6 @@ from src.infrastructure.acl.translators.insert_account_request_dto_translator im
 from src.infrastructure.acl.translators.update_account_request_dto_translator import (
     UpdateAccountRequestDtoTranslator,
 )
-
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
