@@ -8,7 +8,9 @@ from fastapi import FastAPI
 from injector import Injector
 
 from src.infrastructure.adapters.input.http.account_controller import AccountController
-from src.infrastructure.adapters.input.http.correlation_id.correlation_id import CorrelationIdMiddleware
+from src.infrastructure.adapters.input.http.correlation_id.correlation_id import (
+    CorrelationIdMiddleware,
+)
 
 
 class Application:

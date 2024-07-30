@@ -1,4 +1,5 @@
-from typing import Awaitable, Callable
+from collections.abc import Callable
+from typing import Awaitable
 
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -11,7 +12,9 @@ correlation_id_ctx_var = ContextVar("correlation_id", default=None)
 
 
 class CorrelationIdMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next: Callable[[Request], Awaitable[Response]]) -> Response:
+    async def dispatch(
+        self, request: Request, call_next: Callable[[Request], Awaitable[Response]]
+    ) -> Response:
         correlation_id = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
         correlation_id_ctx_var.set(correlation_id)
 
@@ -20,4 +23,3 @@ class CorrelationIdMiddleware(BaseHTTPMiddleware):
         response.headers["X-Correlation-ID"] = correlation_id
 
         return response
-
