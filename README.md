@@ -184,5 +184,6 @@ evolve database schemas, matching with agile development environments. In this p
 * Hexagonal architecture: #TODO: define
 * CQRS: #TODO: define
 * Dependency injection
-* 
+* **[Structured Logging:](https://www.baeldung.com/java-structured-logging)** 
+* [**Correlation IDs**](https://medium.com/stream-zero/correlation-ids-in-enterprise-architecture-d5851df23da0)
 
