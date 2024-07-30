@@ -4,7 +4,6 @@ import factory
 from factory import SubFactory
 
 from src.domain.model.account import Account, AccountId
-from src.domain.model.contact_information import ContactInformation
 from tests.resources.factories.domain.model.contact_information_factory import (
     ContactInformationFactory,
 )

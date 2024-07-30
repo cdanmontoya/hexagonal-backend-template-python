@@ -1,7 +1,7 @@
 from injector import Injector
 
-from src.infrastructure.injector.database_module import DatabaseModule
-from src.infrastructure.injector.repositories_module import (
+from src.infrastructure.config.injector.database_module import DatabaseModule
+from src.infrastructure.config.injector.repositories_module import (
     RepositoriesModule,
 )
 

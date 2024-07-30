@@ -1,3 +1,5 @@
+import logging
+
 from injector import inject
 
 from src.app.commands.update_account import UpdateAccount
@@ -6,6 +8,8 @@ from src.app.ports.output.repositories.account_repository import (
 )
 from src.domain.model.account import Account
 from src.domain.model.contact_information import ContactInformation
+
+logger = logging.getLogger(__name__)
 
 
 class UpdateAccountService:
@@ -20,5 +24,5 @@ class UpdateAccountService:
             update_account.id,
             ContactInformation(update_account.email, update_account.cellphones),
         )
-
+        logger.info(f"Updating account {account.id}")
         return self.__account_repository.update(update_account.id, account)
