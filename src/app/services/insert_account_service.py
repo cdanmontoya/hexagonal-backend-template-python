@@ -1,3 +1,4 @@
+import logging
 from uuid import uuid4
 
 from injector import inject
@@ -10,6 +11,8 @@ from src.domain.error import Error
 from src.domain.model.account import Account, AccountId
 from src.domain.model.contact_information import ContactInformation
 from src.domain.services.validation_service import ValidationService
+
+logger = logging.getLogger(__name__)
 
 
 class InsertAccountService:
@@ -36,6 +39,8 @@ class InsertAccountService:
         is_valid = self.__validation_service.is_valid(account, self.__EMAIL_DOMAIN)
 
         if is_valid:
+            logger.info(f"Inserting account {account.id}")
             return self.__account_repository.insert(account)
         else:
+            logger.info(f"Account {account} is not valid")
             return Error("Account is not valid")

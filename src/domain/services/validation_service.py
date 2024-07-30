@@ -1,12 +1,19 @@
+import logging
 import re
 
 from src.domain.model.account import Account
 from src.domain.model.contact_information import ContactInformation
 
+logger = logging.getLogger(__name__)
+
 
 class ValidationService:
 
     def is_valid(self, account: Account, email_domain: str) -> bool:
+        logger.info(
+            f"Validating if account {account.id} with email {account.contact_information.email} belongs to "
+            f"domain {email_domain}"
+        )
         return self.__has_valid_email_pattern(
             account.contact_information
         ) and self.__belongs_to_allowed_domain(

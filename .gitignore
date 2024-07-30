@@ -246,3 +246,5 @@ cython_debug/
 .DS_Store
 # SQLite files
 *.db
+logs
+logs/*
