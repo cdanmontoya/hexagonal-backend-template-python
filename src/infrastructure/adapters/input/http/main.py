@@ -4,7 +4,7 @@ import uvicorn
 from dotenv import load_dotenv
 
 from src.infrastructure.adapters.input.http.application import Application
-from src.infrastructure.injector.injector import create_injector
+from src.infrastructure.config.injector.injector import create_injector
 
 app = Application(create_injector()).create_app()
 

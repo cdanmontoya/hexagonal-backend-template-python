@@ -1,3 +1,5 @@
+import logging
+from logging import Logger
 from uuid import UUID
 
 from fastapi import APIRouter
@@ -35,11 +37,15 @@ from src.infrastructure.acl.translators.update_account_request_dto_translator im
     UpdateAccountRequestDtoTranslator,
 )
 
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 ACCOUNT_PATH = "/{account_id}"
 
 
 class AccountController:
     router: APIRouter
+    __logger: Logger
     __insert_account_service: InsertAccountService
     __get_accounts_service: GetAccountsService
     __delete_account_service: DeleteAccountService
@@ -69,6 +75,7 @@ class AccountController:
         self.router.add_api_route(ACCOUNT_PATH, self.update, methods=["PUT"])
 
     async def insert(self, request: InsertAccountRequestDto) -> AccountDto | Error:
+        logger.info('Insert account request received')
         insert_account = InsertAccountRequestDtoTranslator.of(request)
         account_result = self.__insert_account_service.insert(insert_account)
 
@@ -78,10 +85,12 @@ class AccountController:
             return AccountDtoTranslator.of(account_result)
 
     async def get_all(self) -> GetAllAccountsResponseDto:
+        logger.info('Get all accounts request received')
         accounts = self.__get_accounts_service.get_all()
         return GetAllAccountsDtoTranslator.of(accounts)
 
     async def get(self, account_id: UUID) -> AccountDto | Error:
+        self.__logger.info('Get account request received')
         get_by_id = GetAccountByIdRequestDtoTranslator.of(account_id)
         account_result = self.__get_accounts_service.get(get_by_id)
 
@@ -91,11 +100,13 @@ class AccountController:
             return AccountDtoTranslator.of(account_result)
 
     async def delete(self, account_id: UUID) -> AccountDto | None:
+        logger.info('Delete account request received')
         delete_account = DeleteAccountRequestDtoTranslator.of(account_id)
         account = self.__delete_account_service.delete(delete_account)
         return AccountDtoTranslator.of(account)
 
     async def update(self, request: UpdateAccountRequestDto) -> AccountDto | None:
+        logger.info('Updated account request received')
         update_account = UpdateAccountRequestDtoTranslator.of(request)
         account = self.__update_account_service.update(update_account)
         return AccountDtoTranslator.of(account)
