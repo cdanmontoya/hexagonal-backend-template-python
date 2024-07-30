@@ -45,7 +45,6 @@ ACCOUNT_PATH = "/{account_id}"
 
 class AccountController:
     router: APIRouter
-    __logger: Logger
     __insert_account_service: InsertAccountService
     __get_accounts_service: GetAccountsService
     __delete_account_service: DeleteAccountService
@@ -90,7 +89,7 @@ class AccountController:
         return GetAllAccountsDtoTranslator.of(accounts)
 
     async def get(self, account_id: UUID) -> AccountDto | Error:
-        self.__logger.info('Get account request received')
+        logger.info('Get account request received')
         get_by_id = GetAccountByIdRequestDtoTranslator.of(account_id)
         account_result = self.__get_accounts_service.get(get_by_id)
 

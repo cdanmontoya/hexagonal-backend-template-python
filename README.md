@@ -138,7 +138,7 @@ DB_URL=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}
 Once installed the dependencies and set up dependencies, the application server can be started by
 
 ```bash
-uvicorn src.infrastructure.adapters.input.http.main:app --host 0.0.0.0 --port 15000 --reload
+uvicorn src.infrastructure.adapters.input.http.main:app --host 0.0.0.0 --port 15000 --reload --log-config=src/infrastructure/config/logs/log_conf.yaml
 ```
 
 ## Testing

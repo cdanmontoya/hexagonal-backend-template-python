@@ -7,7 +7,7 @@ from testcontainers.core.waiting_utils import wait_for_logs
 from testcontainers.postgres import PostgresContainer
 
 from src.infrastructure.adapters.input.http.application import Application
-from src.infrastructure.config.injector import create_injector
+from src.infrastructure.config.injector.injector import create_injector
 
 
 @fixture(scope="function")
