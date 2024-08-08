@@ -7,6 +7,8 @@ from tests.resources.factories.infrastructure.acl.dto.insert_account_request_dto
 )
 from tests.resources.fixtures.database_fixture import (
     test_client,
+    postgres_container,
+    db,
 )
 
 
@@ -22,7 +24,7 @@ def test_given_no_accounts_when_finding_one_should_return_not_found(
     test_client: TestClient,
 ):
     response = test_client.get(f"/accounts/{uuid.uuid4()}")
-    assert response.status_code == 200
+    assert response.status_code == 400
     assert response.json()["message"] == "Account not found"
 
 

@@ -12,7 +12,7 @@ from tests.resources.factories.domain.model.account_factory import AccountFactor
 from tests.resources.factories.domain.model.contact_information_factory import (
     ContactInformationFactory,
 )
-from tests.resources.fixtures.database_fixture import db
+from tests.resources.fixtures.database_fixture import db, postgres_container
 
 
 @pytest.fixture

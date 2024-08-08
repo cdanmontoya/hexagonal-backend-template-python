@@ -16,4 +16,4 @@ class IntegrationEvent(BaseModel):
 def to_json(event: Event) -> str:
     return IntegrationEvent(
         event=event, correlation_id=correlation_id_ctx_var.get()
-    ).json()
+    ).model_dump_json()

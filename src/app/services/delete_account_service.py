@@ -19,7 +19,9 @@ class DeleteAccountService:
     __account_repository: AccountRepository
 
     @inject
-    def __init__(self, event_publisher: EventPublisher, account_repository: AccountRepository) -> None:
+    def __init__(
+        self, event_publisher: EventPublisher, account_repository: AccountRepository
+    ) -> None:
         self._event_publisher = event_publisher
         self.__account_repository = account_repository
 
