@@ -1,10 +1,10 @@
 import pytest
 
+from src.domain.services.validation_service import ValidationService
 from tests.resources.factories.domain.model.account_factory import AccountFactory
 from tests.resources.factories.domain.model.contact_information_factory import (
     ContactInformationFactory,
 )
-from src.domain.services.validation_service import ValidationService
 
 
 @pytest.fixture

@@ -4,8 +4,6 @@ from starlette.testclient import TestClient
 
 from tests.resources.fixtures.database_fixture import (
     test_client,
-    db,
-    postgres_container,
 )
 
 

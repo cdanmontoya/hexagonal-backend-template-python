@@ -7,8 +7,6 @@ from tests.resources.factories.infrastructure.acl.dto.insert_account_request_dto
 )
 from tests.resources.fixtures.database_fixture import (
     test_client,
-    db,
-    postgres_container,
 )
 
 
