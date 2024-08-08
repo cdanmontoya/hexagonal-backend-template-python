@@ -96,14 +96,22 @@ class AccountController:
         else:
             return AccountDtoTranslator.of(account_result)
 
-    async def delete(self, account_id: UUID) -> AccountDto | None:
+    async def delete(self, account_id: UUID) -> AccountDto | Error:
         logger.info("Delete account request received")
         delete_account = DeleteAccountRequestDtoTranslator.of(account_id)
         account = self.__delete_account_service.delete(delete_account)
-        return AccountDtoTranslator.of(account)
 
-    async def update(self, request: UpdateAccountRequestDto) -> AccountDto | None:
+        if isinstance(account, Error):
+            return account
+        else:
+            return AccountDtoTranslator.of(account)
+
+    async def update(self, request: UpdateAccountRequestDto) -> AccountDto | Error:
         logger.info("Updated account request received")
         update_account = UpdateAccountRequestDtoTranslator.of(request)
         account = self.__update_account_service.update(update_account)
-        return AccountDtoTranslator.of(account)
+
+        if isinstance(account, Error):
+            return account
+        else:
+            return AccountDtoTranslator.of(account)

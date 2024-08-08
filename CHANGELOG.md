@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [10] Integration tests to PostgreSQL using `testcontainers` 
 - [16] Custom logger configuration with structured format and colors
 - [33] Correlation ID middleware implementation
+- [4] Adding Publisher interface to emit events
 
 ## [0.1.0] - 2024-05-20
 ### Added

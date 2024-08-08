@@ -7,8 +7,7 @@ from src.app.commands.insert_account import InsertAccount
 from src.app.ports.output.events.publisher import EventPublisher, publishes
 from src.app.ports.output.repositories.account_repository import AccountRepository
 from src.domain.error import Error
-from src.domain.events.account_inserted import AccountInserted
-from src.domain.events.account_not_inserted import AccountNotInserted
+from src.domain.events.account_inserted import AccountInserted, AccountNotInserted
 from src.domain.model.account import Account, AccountId
 from src.domain.model.contact_information import ContactInformation
 from src.domain.services.validation_service import ValidationService

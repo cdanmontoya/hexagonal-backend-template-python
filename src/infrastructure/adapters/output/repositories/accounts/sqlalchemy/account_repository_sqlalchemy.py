@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from src.app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
+from src.domain.error import Error
 from src.domain.model.account import Account, AccountId
 from src.infrastructure.adapters.output.repositories.accounts.sqlalchemy.account_mapper import (
     AccountMapper,
@@ -55,7 +56,7 @@ class AccountRepositorySQLAlchemy(AccountRepository):
             return account
 
     @override
-    def update(self, key: AccountId, account: Account) -> Account:
+    def update(self, key: AccountId, account: Account) -> Account | Error:
         with Session(self.__engine) as session:
             account_dao = session.get(AccountDao, key.id)
 
@@ -66,11 +67,13 @@ class AccountRepositorySQLAlchemy(AccountRepository):
                     for phone in account.contact_information.cellphones
                 ]
                 session.commit()
+                return account
 
-            return account
+            else:
+                return Error(f"Account with id {key.id} not found")
 
     @override
-    def delete(self, key: AccountId) -> Account:
+    def delete(self, key: AccountId) -> Account | Error:
         with Session(self.__engine) as session:
             account_dao = session.get(AccountDao, key.id)
 
@@ -78,7 +81,6 @@ class AccountRepositorySQLAlchemy(AccountRepository):
                 account = AccountMapper.from_account_dao(account_dao)
                 session.delete(account_dao)
                 session.commit()
+                return account
             else:
-                account = None
-
-            return account
+                return Error(f"Account with id {key.id} does not exist")
