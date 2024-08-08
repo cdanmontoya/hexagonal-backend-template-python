@@ -1,11 +1,10 @@
+import uuid
 from collections.abc import Callable
+from contextvars import ContextVar
 from typing import Awaitable
 
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
-import uuid
-from contextvars import ContextVar
-
 from starlette.responses import Response
 
 correlation_id_ctx_var = ContextVar("correlation_id", default=None)
