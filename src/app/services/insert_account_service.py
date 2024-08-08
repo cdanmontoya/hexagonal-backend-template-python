@@ -6,7 +6,7 @@ from injector import inject
 from src.app.commands.insert_account import InsertAccount
 from src.app.ports.output.events.publisher import EventPublisher, publishes
 from src.app.ports.output.repositories.account_repository import AccountRepository
-from src.domain.error import Error
+from src.domain.error import Error, DomainError
 from src.domain.events.account_inserted import AccountInserted, AccountNotInserted
 from src.domain.model.account import Account, AccountId
 from src.domain.model.contact_information import ContactInformation
@@ -47,4 +47,4 @@ class InsertAccountService:
             return self.__account_repository.insert(account)
         else:
             logger.info(f"Account {account} is not valid")
-            return Error(f"Account {account} is not valid")
+            return DomainError(f"Account {account} is not valid")

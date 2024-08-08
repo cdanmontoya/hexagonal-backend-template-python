@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from src.app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
-from src.domain.error import Error
+from src.domain.error import Error, DomainError
 from src.domain.model.account import Account, AccountId
 from src.infrastructure.adapters.output.repositories.accounts.sqlalchemy.account_mapper import (
     AccountMapper,
@@ -70,7 +70,7 @@ class AccountRepositorySQLAlchemy(AccountRepository):
                 return account
 
             else:
-                return Error(f"Account with id {key.id} not found")
+                return DomainError(f"Account with id {key.id} not found")
 
     @override
     def delete(self, key: AccountId) -> Account | Error:
