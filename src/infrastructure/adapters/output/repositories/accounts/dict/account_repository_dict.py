@@ -5,6 +5,7 @@ from injector import singleton
 from src.app.ports.output.repositories.account_repository import (
     AccountRepository,
 )
+from src.domain.error import Error, DomainError
 from src.domain.model.account import Account, AccountId
 
 
@@ -34,5 +35,8 @@ class AccountRepositoryDict(AccountRepository):
         return account
 
     @override
-    def delete(self, key: AccountId) -> Account:
-        return self.__db.pop(key)
+    def delete(self, key: AccountId) -> Account | Error:
+        try:
+            return self.__db.pop(key)
+        except KeyError:
+            return DomainError(f"The account with id {key.id} does not exist.")

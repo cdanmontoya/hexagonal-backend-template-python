@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABC
 
+from src.domain.error import Error
 from src.domain.model.account import Account, AccountId
 
 
@@ -17,9 +18,9 @@ class AccountRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, key: AccountId, account: Account) -> Account:
+    def update(self, key: AccountId, account: Account) -> Account | Error:
         raise NotImplementedError
 
     @abstractmethod
-    def delete(self, key: AccountId) -> Account:
+    def delete(self, key: AccountId) -> Account | Error:
         raise NotImplementedError
