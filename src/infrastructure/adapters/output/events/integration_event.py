@@ -10,7 +10,7 @@ from src.infrastructure.adapters.input.http.correlation_id.correlation_id import
 
 class IntegrationEvent(BaseModel):
     event: Any
-    correlation_id: str
+    correlation_id: str | None
 
 
 def to_json(event: Event) -> str:
