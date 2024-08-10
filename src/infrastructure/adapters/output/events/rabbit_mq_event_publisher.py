@@ -29,5 +29,4 @@ class RabbitMqEventPublisher(EventPublisher):
         self._channel.basic_publish(
             exchange=f"{event.source}.{event.name}", routing_key="", body=to_json(event)
         )
-        print(f"Published event {event.name} with id {event.id}")
         logger.info(f"Published event {event.name} with id {event.id}")

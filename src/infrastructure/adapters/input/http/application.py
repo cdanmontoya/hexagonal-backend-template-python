@@ -9,6 +9,9 @@ from src.infrastructure.adapters.input.http.account_controller import AccountCon
 from src.infrastructure.adapters.input.http.correlation_id.correlation_id import (
     CorrelationIdMiddleware,
 )
+from src.infrastructure.adapters.input.http.health_status_controller import (
+    HealthStatusController,
+)
 
 
 # @asynccontextmanager
@@ -23,12 +26,14 @@ from src.infrastructure.adapters.input.http.correlation_id.correlation_id import
 
 
 class Application:
+    __healt_status_controller: HealthStatusController
     __account_controller: AccountController
     __logger: logging.Logger
 
     def __init__(self, injector: Injector) -> None:
         self.__logger = logging.getLogger(__name__)
         self.__account_controller = injector.get(AccountController)
+        self.__healt_status_controller = injector.get(HealthStatusController)
 
     @staticmethod
     def __run_migrations() -> None:
@@ -48,6 +53,7 @@ class Application:
     def create_app(self) -> FastAPI:
         application = FastAPI()
         application.include_router(self.__account_controller.router)
+        application.include_router(self.__healt_status_controller.router)
         application.add_middleware(CorrelationIdMiddleware)
 
         return application
