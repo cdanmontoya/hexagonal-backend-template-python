@@ -21,6 +21,7 @@ from src.infrastructure.adapters.input.http.correlation_id.correlation_id import
 #         pass
 #     yield
 
+
 class Application:
     __account_controller: AccountController
     __logger: logging.Logger

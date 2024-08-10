@@ -1,11 +1,12 @@
 import asyncio
-import logging
 import os
 
 import uvicorn
 from dotenv import load_dotenv
 
-from src.infrastructure.adapters.input.events.rabbit_mq_event_consumer import RabbitMqEventConsumer
+from src.infrastructure.adapters.input.events.rabbit_mq_event_consumer import (
+    RabbitMqEventConsumer,
+)
 from src.infrastructure.adapters.input.http.application import Application
 from src.infrastructure.config.injector.injector import create_injector
 

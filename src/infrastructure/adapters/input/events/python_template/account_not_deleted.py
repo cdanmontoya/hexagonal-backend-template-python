@@ -1,6 +1,6 @@
 import logging
 
-from src.infrastructure.acl.dto.events.account_deleted import AccountDeletedDto, AccountNotDeletedDto
+from src.infrastructure.acl.dto.events.account_deleted import AccountNotDeletedDto
 from src.infrastructure.acl.dto.events.integration_event import IntegrationEvent
 
 logger = logging.getLogger(__name__)
@@ -13,7 +13,9 @@ class AccountNotDeletedProcessor:
 
     def process_event(self, event: AccountNotDeletedDto) -> None:
         logger.info("Sending notification")
-        print(f"Notification: The account has not been deleted. Reason: {event.message}")
+        print(
+            f"Notification: The account has not been deleted. Reason: {event.message}"
+        )
 
     def handle_event(self, event: IntegrationEvent) -> None:
         logger.info(f"Processing event {event.event.id}")

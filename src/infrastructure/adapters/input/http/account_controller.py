@@ -10,7 +10,9 @@ from src.app.services.insert_account_service import InsertAccountService
 from src.app.services.update_account_service import UpdateAccountService
 from src.domain.error import Error, DomainError
 from src.infrastructure.acl.dto.requests.account_dto import AccountDto
-from src.infrastructure.acl.dto.requests.get_all_accounts_dto import GetAllAccountsResponseDto
+from src.infrastructure.acl.dto.requests.get_all_accounts_dto import (
+    GetAllAccountsResponseDto,
+)
 from src.infrastructure.acl.dto.requests.insert_account_request_dto import (
     InsertAccountRequestDto,
 )
