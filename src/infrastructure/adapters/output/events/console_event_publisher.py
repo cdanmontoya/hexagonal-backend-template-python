@@ -1,6 +1,6 @@
-from src.app.ports.output.events.publisher import EventPublisher
+from src.app.ports.output.events.event_publisher import EventPublisher
 from src.domain.events.event import Event
-from src.infrastructure.adapters.output.events.integration_event import to_json
+from src.infrastructure.acl.dto.events.integration_event import to_json
 
 
 class ConsoleEventPublisher(EventPublisher):

@@ -3,7 +3,7 @@ import logging
 from injector import inject
 
 from src.app.commands.update_account import UpdateAccount
-from src.app.ports.output.events.publisher import publishes, EventPublisher
+from src.app.ports.output.events.event_publisher import publishes, EventPublisher
 from src.app.ports.output.repositories.account_repository import (
     AccountRepository,
 )

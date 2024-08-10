@@ -1,6 +1,4 @@
 import logging
-from contextlib import asynccontextmanager
-from typing import AsyncGenerator
 
 from alembic import command
 from alembic.config import Config
@@ -12,6 +10,16 @@ from src.infrastructure.adapters.input.http.correlation_id.correlation_id import
     CorrelationIdMiddleware,
 )
 
+
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     try:
+#         loop = asyncio.get_running_loop()
+#         task = loop.create_task(RabbitMqEventConsumer().consume(loop))
+#         await task
+#     except Exception as e:
+#         pass
+#     yield
 
 class Application:
     __account_controller: AccountController
@@ -26,14 +34,15 @@ class Application:
         alembic_cfg = Config("alembic.ini")
         command.upgrade(alembic_cfg, "head")
 
-    @asynccontextmanager
-    async def lifespan(self, app_: FastAPI) -> AsyncGenerator[None, None]:
-        # TODO: improve the lifespan method to ensure all logs are shown
-        self.__logger.info("Starting up...")
-        self.__logger.info("run alembic upgrade head...")
-        self.__run_migrations()
-        yield
-        self.__logger.info("Shutting down...")
+    # @asynccontextmanager
+    # async def lifespan(self, app_: FastAPI) -> AsyncGenerator[None, None]:
+    #     # TODO: improve the lifespan method to ensure all logs are shown
+    #     self.__logger.info("Starting up...")
+    #     self.__logger.info("run alembic upgrade head...")
+    #     self.__run_migrations()
+    #     #RabbitMqEventConsumer()
+    #     yield
+    #     self.__logger.info("Shutting down...")
 
     def create_app(self) -> FastAPI:
         application = FastAPI()

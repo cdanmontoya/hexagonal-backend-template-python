@@ -1,7 +1,7 @@
 import factory
 from faker import Faker
 
-from src.infrastructure.acl.dto.insert_account_request_dto import (
+from src.infrastructure.acl.dto.requests.insert_account_request_dto import (
     InsertAccountRequestDto,
 )
 
