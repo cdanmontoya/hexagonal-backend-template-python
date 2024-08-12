@@ -3,5 +3,5 @@ from abc import abstractmethod, ABC
 
 class EventConsumer(ABC):
     @abstractmethod
-    def run(self):
+    def run(self) -> None:
         raise NotImplementedError

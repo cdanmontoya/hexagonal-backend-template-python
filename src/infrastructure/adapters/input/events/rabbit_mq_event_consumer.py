@@ -1,8 +1,7 @@
-import asyncio
 import logging
 import os
-from asyncio import AbstractEventLoop
-from collections.abc import Callable
+from collections.abc import Callable, Coroutine
+from typing import Any
 
 from aio_pika import connect_robust
 from aio_pika.abc import (
@@ -12,7 +11,6 @@ from aio_pika.abc import (
     AbstractRobustQueue,
     ExchangeType,
 )
-from injector import inject
 
 from src.app.ports.input.events.event_consumer import EventConsumer
 from src.infrastructure.acl.dto.events.integration_event import IntegrationEvent
@@ -32,7 +30,7 @@ class RabbitMqEventConsumer(EventConsumer):
     _queue: AbstractRobustQueue
 
     # @inject
-    def __init__(self, connection: AbstractRobustConnection = None):
+    def __init__(self, connection: AbstractRobustConnection = None) -> None:
         self._connection: AbstractRobustConnection = connection
         self._channel: AbstractRobustChannel = None
         self._queue: AbstractRobustQueue = None
@@ -41,7 +39,7 @@ class RabbitMqEventConsumer(EventConsumer):
             "python_template.AccountInserted": AccountInsertedProcessor().handle_event,
         }
 
-    async def connect(self):
+    async def connect(self) -> None:
         # logger.info("Connecting to RabbitMQ...")
         if not self._connection:
             self._connection = await connect_robust(
@@ -55,14 +53,14 @@ class RabbitMqEventConsumer(EventConsumer):
             os.getenv("APP_NAME", "undefined")
         )
 
-    async def consume(self):
+    async def consume(self) -> None:
         for handler_name in self._event_handlers.keys():
             await self._channel.declare_exchange(handler_name, type=ExchangeType.FANOUT)
             await self._queue.bind(handler_name)
 
         await self._queue.consume(self.on_message)
 
-    def process_event(self, event: IntegrationEvent):
+    def process_event(self, event: IntegrationEvent) -> Coroutine[Any, Any, None]:
         handler = self._event_handlers.get(f"{event.event.source}.{event.event.name}")
         return handler(event)
 
@@ -74,6 +72,6 @@ class RabbitMqEventConsumer(EventConsumer):
             print(f"Processing event: {integration_event}")
             await self.process_event(integration_event)
 
-    async def run(self):
+    async def run(self) -> None:
         await self.connect()
         await self.consume()

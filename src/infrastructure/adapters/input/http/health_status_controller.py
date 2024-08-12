@@ -17,5 +17,5 @@ class HealthStatusController:
         self.router.add_api_route("/", self.get_status, methods=["GET"])
 
     @staticmethod
-    async def get_status() -> dict:
+    async def get_status() -> dict[str, str]:
         return {"application_name": os.getenv("APP_NAME", "undefined"), "status": "ok"}
