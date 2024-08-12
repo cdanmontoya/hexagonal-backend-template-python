@@ -1,4 +1,5 @@
 import asyncio
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -25,7 +26,7 @@ class Application:
         self.__event_consumer = injector.get(EventConsumer)
 
     @asynccontextmanager
-    async def lifespan(self, app: FastAPI):
+    async def lifespan(self, app: FastAPI) -> AsyncGenerator[None]:
         loop = asyncio.get_running_loop()
         task = loop.create_task(self.__event_consumer.run())
         await task
