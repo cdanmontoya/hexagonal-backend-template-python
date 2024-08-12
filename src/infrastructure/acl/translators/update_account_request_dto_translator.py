@@ -1,6 +1,6 @@
 from src.app.commands.update_account import UpdateAccount
 from src.domain.model.account import AccountId
-from src.infrastructure.acl.dto.update_account_request_dto import (
+from src.infrastructure.acl.dto.requests.update_account_request_dto import (
     UpdateAccountRequestDto,
 )
 

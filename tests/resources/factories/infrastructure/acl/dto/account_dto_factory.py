@@ -4,7 +4,10 @@ import factory
 from factory import SubFactory
 from faker import Faker
 
-from src.infrastructure.acl.dto.account_dto import ContactInformationDto, AccountDto
+from src.infrastructure.acl.dto.requests.account_dto import (
+    ContactInformationDto,
+    AccountDto,
+)
 
 fake = Faker()
 

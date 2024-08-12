@@ -1,5 +1,8 @@
 from src.domain.model.account import Account
-from src.infrastructure.acl.dto.account_dto import AccountDto, ContactInformationDto
+from src.infrastructure.acl.dto.requests.account_dto import (
+    AccountDto,
+    ContactInformationDto,
+)
 
 
 class AccountDtoTranslator:

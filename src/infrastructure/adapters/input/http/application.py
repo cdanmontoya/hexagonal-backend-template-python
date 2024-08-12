@@ -1,43 +1,43 @@
-import logging
+import asyncio
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator
 
 from alembic import command
 from alembic.config import Config
 from fastapi import FastAPI
 from injector import Injector
 
+from src.app.ports.input.events.event_consumer import EventConsumer
 from src.infrastructure.adapters.input.http.account_controller import AccountController
-from src.infrastructure.adapters.input.http.correlation_id.correlation_id import (
+from src.infrastructure.config.observability.correlation_id.correlation_id import (
     CorrelationIdMiddleware,
+)
+from src.infrastructure.adapters.input.http.health_status_controller import (
+    HealthStatusController,
 )
 
 
 class Application:
+    __health_status_controller: HealthStatusController
     __account_controller: AccountController
-    __logger: logging.Logger
+    _event_consumer: EventConsumer
 
     def __init__(self, injector: Injector) -> None:
-        self.__logger = logging.getLogger(__name__)
         self.__account_controller = injector.get(AccountController)
-
-    @staticmethod
-    def __run_migrations() -> None:
-        alembic_cfg = Config("alembic.ini")
-        command.upgrade(alembic_cfg, "head")
+        self.__health_status_controller = injector.get(HealthStatusController)
+        self.__event_consumer = injector.get(EventConsumer)
 
     @asynccontextmanager
-    async def lifespan(self, app_: FastAPI) -> AsyncGenerator[None, None]:
-        # TODO: improve the lifespan method to ensure all logs are shown
-        self.__logger.info("Starting up...")
-        self.__logger.info("run alembic upgrade head...")
-        self.__run_migrations()
+    async def lifespan(self, app: FastAPI) -> AsyncGenerator[None]:
+        loop = asyncio.get_running_loop()
+        task = loop.create_task(self.__event_consumer.run())
+        await task
         yield
-        self.__logger.info("Shutting down...")
 
     def create_app(self) -> FastAPI:
-        application = FastAPI()
+        application = FastAPI(lifespan=self.lifespan)
         application.include_router(self.__account_controller.router)
+        application.include_router(self.__health_status_controller.router)
         application.add_middleware(CorrelationIdMiddleware)
 
         return application

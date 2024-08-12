@@ -3,6 +3,7 @@
 ![](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![](https://img.shields.io/badge/fastapi-109989?style=for-the-badge&logo=FASTAPI&logoColor=white)
 ![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![](https://img.shields.io/badge/rabbitmq-%23FF6600.svg?&style=for-the-badge&logo=rabbitmq&logoColor=white)
 ![](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black)
 
@@ -55,8 +56,8 @@ software in the `infrastructure` package.
     ├── it/
     │   └── ...
     └── resources/
-        ├── factories/              # Factories to generate domain-compliant data
-        └── fixtures/               # Useful fixtures for easier testing
+        └── factories/              # Factories to generate domain-compliant data
+    └── conftest.py                 # Useful fixtures for easier testing
 ```
 
 This folder structure is enforced using [import-linter](https://import-linter.readthedocs.io). This allows to check de 
@@ -114,9 +115,9 @@ and downgrade evolution code. I prefer using plain SQL. Then, the evolutions can
 ```bash
 alembic upgrade head
 ```
-The application server is configured to apply the migrations up to the latest revision on every startup.
 
-**WARNING:** Do not change the code of an already applied evolution on productive environments.
+**WARNING:** Do not change the code of an already applied evolution on productive environments. It could lead to 
+inconsistent eschemas.
 
 
 
@@ -133,6 +134,13 @@ DB_USER=dbuser
 DB_PASS=dbpassword
 DB_DATABASE=python_template
 DB_URL=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}
+DB_IMAGE=postgres:16.3
+MESSAGE_BROKER_HOST=localhost
+MESSAGE_BROKER_PORT=5672
+MESSAGE_BROKER_USER=guest
+MESSAGE_BROKER_PASS=guest
+APP_PORT=15000
+APP_NAME=python_template
 ```
 
 Once installed the dependencies and set up dependencies, the application server can be started by
@@ -171,19 +179,3 @@ coverage xml -i
 
 coverge combine # To merge both coverage reports
 ```
-
-# Developing a new feature
-#TODO
-# Deploying 
-#TODO
-
-# References and further readings
-
-* [**Evolutionary Database Design:**](https://martinfowler.com/articles/evodb.html) is a technique that allows to continuously 
-evolve database schemas, matching with agile development environments. In this project is achieved using [Alembic](https://alembic.sqlalchemy.org/en/latest/).
-* Hexagonal architecture: #TODO: define
-* CQRS: #TODO: define
-* Dependency injection
-* **[Structured Logging:](https://www.baeldung.com/java-structured-logging)** 
-* [**Correlation IDs**](https://medium.com/stream-zero/correlation-ids-in-enterprise-architecture-d5851df23da0)
-

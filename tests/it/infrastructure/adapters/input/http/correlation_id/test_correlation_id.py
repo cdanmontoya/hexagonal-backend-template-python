@@ -2,12 +2,6 @@ import uuid
 
 from starlette.testclient import TestClient
 
-from tests.resources.fixtures.database_fixture import (
-    test_client,
-    postgres_container,
-    db,
-)
-
 
 def test_given_a_request_without_correlation_id_should_add_a_new_one_to_response_headers(
     test_client: TestClient,

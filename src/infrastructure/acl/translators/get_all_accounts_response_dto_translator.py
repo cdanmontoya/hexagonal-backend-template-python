@@ -1,5 +1,7 @@
 from src.domain.model.account import Account
-from src.infrastructure.acl.dto.get_all_accounts_dto import GetAllAccountsResponseDto
+from src.infrastructure.acl.dto.requests.get_all_accounts_dto import (
+    GetAllAccountsResponseDto,
+)
 from src.infrastructure.acl.translators.account_dto_translator import (
     AccountDtoTranslator,
 )

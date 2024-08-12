@@ -9,12 +9,14 @@ from src.app.services.get_accounts_service import GetAccountsService
 from src.app.services.insert_account_service import InsertAccountService
 from src.app.services.update_account_service import UpdateAccountService
 from src.domain.error import Error, DomainError
-from src.infrastructure.acl.dto.account_dto import AccountDto
-from src.infrastructure.acl.dto.get_all_accounts_dto import GetAllAccountsResponseDto
-from src.infrastructure.acl.dto.insert_account_request_dto import (
+from src.infrastructure.acl.dto.requests.account_dto import AccountDto
+from src.infrastructure.acl.dto.requests.get_all_accounts_dto import (
+    GetAllAccountsResponseDto,
+)
+from src.infrastructure.acl.dto.requests.insert_account_request_dto import (
     InsertAccountRequestDto,
 )
-from src.infrastructure.acl.dto.update_account_request_dto import (
+from src.infrastructure.acl.dto.requests.update_account_request_dto import (
     UpdateAccountRequestDto,
 )
 from src.infrastructure.acl.translators.account_dto_translator import (
