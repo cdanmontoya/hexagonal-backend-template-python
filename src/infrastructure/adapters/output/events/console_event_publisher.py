@@ -2,7 +2,7 @@ import logging
 
 from src.app.ports.output.events.event_publisher import EventPublisher
 from src.domain.events.event import Event
-from src.infrastructure.acl.dto.events.integration_event import to_json
+from src.infrastructure.acl.translators.event_dto_translator import to_json
 
 logger = logging.getLogger(__name__)
 
