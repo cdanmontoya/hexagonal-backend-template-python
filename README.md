@@ -115,9 +115,9 @@ and downgrade evolution code. I prefer using plain SQL. Then, the evolutions can
 ```bash
 alembic upgrade head
 ```
-The application server is configured to apply the migrations up to the latest revision on every startup.
 
-**WARNING:** Do not change the code of an already applied evolution on productive environments.
+**WARNING:** Do not change the code of an already applied evolution on productive environments. It could lead to 
+inconsistent eschemas.
 
 
 
