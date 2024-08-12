@@ -56,8 +56,8 @@ software in the `infrastructure` package.
     ├── it/
     │   └── ...
     └── resources/
-        ├── factories/              # Factories to generate domain-compliant data
-        └── fixtures/               # Useful fixtures for easier testing
+        └── factories/              # Factories to generate domain-compliant data
+    └── conftest.py                 # Useful fixtures for easier testing
 ```
 
 This folder structure is enforced using [import-linter](https://import-linter.readthedocs.io). This allows to check de 

@@ -12,6 +12,7 @@ from aio_pika.abc import (
     AbstractRobustQueue,
     ExchangeType,
 )
+from injector import inject
 
 from src.app.ports.input.events.event_consumer import EventConsumer
 from src.infrastructure.acl.dto.events.integration_event import IntegrationEvent
@@ -26,14 +27,13 @@ logger = logging.getLogger(__name__)
 
 
 class RabbitMqEventConsumer(EventConsumer):
-    _loop: AbstractEventLoop
     _connection: AbstractRobustConnection
     _chanel: AbstractRobustChannel
     _queue: AbstractRobustQueue
 
-    def __init__(self):
-        self._loop = asyncio.get_event_loop()
-        self._connection: AbstractRobustConnection = None
+    # @inject
+    def __init__(self, connection: AbstractRobustConnection = None):
+        self._connection: AbstractRobustConnection = connection
         self._channel: AbstractRobustChannel = None
         self._queue: AbstractRobustQueue = None
         self._event_handlers: dict[str, Callable[IntegrationEvent, None]] = {
@@ -42,10 +42,14 @@ class RabbitMqEventConsumer(EventConsumer):
         }
 
     async def connect(self):
-        logger.info("Connecting to RabbitMQ...")
-        self._connection = await connect_robust(
-            host="localhost", login="guest", password="guest"
-        )
+        # logger.info("Connecting to RabbitMQ...")
+        if not self._connection:
+            self._connection = await connect_robust(
+                host=os.getenv("MESSAGE_BROKER_HOST", "localhost"),
+                port=int(os.getenv("MESSAGE_BROKER_PORT", 5672)),
+                login=os.getenv("MESSAGE_BROKER_USER", "guest"),
+                password=os.getenv("MESSAGE_BROKER_PASS", "guest"),
+            )
         self._channel = await self._connection.channel()
         self._queue = await self._channel.declare_queue(
             os.getenv("APP_NAME", "undefined")
@@ -67,7 +71,7 @@ class RabbitMqEventConsumer(EventConsumer):
             integration_event = IntegrationEvent.model_validate_json(
                 message.body.decode("utf-8")
             )
-            logger.info(f"Processing event: {integration_event}")
+            print(f"Processing event: {integration_event}")
             await self.process_event(integration_event)
 
     async def run(self):

@@ -9,11 +9,6 @@ from tests.resources.factories.infrastructure.acl.dto.update_account_request_dto
 from tests.resources.factories.infrastructure.acl.dto.insert_account_request_dto_factory import (
     InsertAccountRequestDtoFactory,
 )
-from tests.resources.fixtures.database_fixture import (
-    test_client,
-    postgres_container,
-    db,
-)
 
 
 def test_given_no_accounts_when_listing_all_should_return_empty_list(
