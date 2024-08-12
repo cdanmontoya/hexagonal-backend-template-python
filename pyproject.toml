@@ -110,3 +110,6 @@ modules =[
     "src.domain",
     "src.infrastructure.acl.dto",
 ]
+#ignore_imports =[
+#    "src.infrastructure.acl.dto.events.integration_event -> src.domain.events.event"
+#]

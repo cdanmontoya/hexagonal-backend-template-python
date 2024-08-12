@@ -7,7 +7,7 @@ from injector import Injector
 
 from src.app.ports.input.events.event_consumer import EventConsumer
 from src.infrastructure.adapters.input.http.account_controller import AccountController
-from src.infrastructure.adapters.input.http.correlation_id.correlation_id import (
+from src.infrastructure.config.observability.correlation_id import (
     CorrelationIdMiddleware,
 )
 from src.infrastructure.adapters.input.http.health_status_controller import (

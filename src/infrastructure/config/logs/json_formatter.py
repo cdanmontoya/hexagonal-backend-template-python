@@ -1,7 +1,7 @@
 import json
 import logging
 
-from src.infrastructure.adapters.input.http.correlation_id.correlation_id import correlation_id_ctx_var
+from src.infrastructure.config.observability.correlation_id import correlation_id_ctx_var
 
 
 class JsonFormatter(logging.Formatter):

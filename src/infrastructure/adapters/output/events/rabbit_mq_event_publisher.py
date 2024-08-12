@@ -8,7 +8,7 @@ from pika.adapters.blocking_connection import BlockingConnection
 
 from src.app.ports.output.events.event_publisher import EventPublisher
 from src.domain.events.event import Event
-from src.infrastructure.acl.dto.events.integration_event import to_json
+from src.infrastructure.acl.translators.event_dto_translator import to_json
 
 logger = logging.getLogger(__name__)
 
@@ -40,4 +40,4 @@ class RabbitMqEventPublisher(EventPublisher):
         self._channel.basic_publish(
             exchange=f"{event.source}.{event.name}", routing_key="", body=to_json(event)
         )
-        print(f"Published event {event.name} with id {event.id}")
+        logger.info(f"Published event {event.name} with id {event.id}")

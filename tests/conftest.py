@@ -1,6 +1,6 @@
 import os
 
-from aio_pika import connect_robust
+from aio_pika import connect_robust, RobustConnection
 from aio_pika.abc import AbstractRobustConnection
 from pika.adapters.blocking_connection import BlockingConnection
 from pika.connection import ConnectionParameters
@@ -11,6 +11,8 @@ from testcontainers.core.waiting_utils import wait_for_logs
 from testcontainers.postgres import PostgresContainer
 from testcontainers.rabbitmq import RabbitMqContainer
 
+from src.app.ports.input.events.event_consumer import EventConsumer
+from src.infrastructure.adapters.input.events.rabbit_mq_event_consumer import RabbitMqEventConsumer
 from src.infrastructure.adapters.input.http.application import Application
 from src.infrastructure.config.injector.injector import create_injector
 
@@ -35,7 +37,7 @@ def message_broker_blocking_conn(
 @fixture(scope="session")
 async def message_broker_async_conn(
     message_broker_conn_params: ConnectionParameters,
-) -> AbstractRobustConnection:
+) -> RobustConnection:
     connection = await connect_robust(
         host=message_broker_conn_params.host,
         port=message_broker_conn_params.port,
@@ -71,12 +73,12 @@ def db(postgres_container: PostgresContainer) -> Engine:
 def test_client(
     db: Engine,
     message_broker_blocking_conn: BlockingConnection,
-    message_broker_async_conn: AbstractRobustConnection,
+    message_broker_async_conn: RobustConnection,
 ) -> TestClient:
     inject = create_injector()
 
     inject.binder.bind(Engine, db)
     inject.binder.bind(BlockingConnection, message_broker_blocking_conn)
-    inject.binder.bind(AbstractRobustConnection, message_broker_async_conn)
+    inject.binder.bind(EventConsumer, RabbitMqEventConsumer(message_broker_async_conn))
 
     return TestClient(Application(inject).create_app())

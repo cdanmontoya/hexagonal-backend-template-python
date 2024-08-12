@@ -3,7 +3,7 @@ import os
 from collections.abc import Callable, Coroutine
 from typing import Any
 
-from aio_pika import connect_robust
+from aio_pika import connect_robust, RobustConnection
 from aio_pika.abc import (
     AbstractIncomingMessage,
     AbstractRobustConnection,
@@ -11,6 +11,7 @@ from aio_pika.abc import (
     AbstractRobustQueue,
     ExchangeType,
 )
+from injector import inject
 
 from src.app.ports.input.events.event_consumer import EventConsumer
 from src.infrastructure.acl.dto.events.integration_event import IntegrationEvent
@@ -29,9 +30,8 @@ class RabbitMqEventConsumer(EventConsumer):
     _chanel: AbstractRobustChannel
     _queue: AbstractRobustQueue
 
-    # @inject
-    def __init__(self, connection: AbstractRobustConnection = None) -> None:
-        self._connection: AbstractRobustConnection = connection
+    def __init__(self, connection: RobustConnection = None) -> None:
+        self._connection: RobustConnection = connection
         self._channel: AbstractRobustChannel = None
         self._queue: AbstractRobustQueue = None
         self._event_handlers: dict[str, Callable[IntegrationEvent, None]] = {
@@ -40,7 +40,6 @@ class RabbitMqEventConsumer(EventConsumer):
         }
 
     async def connect(self) -> None:
-        # logger.info("Connecting to RabbitMQ...")
         if not self._connection:
             self._connection = await connect_robust(
                 host=os.getenv("MESSAGE_BROKER_HOST", "localhost"),
@@ -69,7 +68,7 @@ class RabbitMqEventConsumer(EventConsumer):
             integration_event = IntegrationEvent.model_validate_json(
                 message.body.decode("utf-8")
             )
-            print(f"Processing event: {integration_event}")
+            logger.info(f"Processing event: {integration_event}")
             await self.process_event(integration_event)
 
     async def run(self) -> None:
