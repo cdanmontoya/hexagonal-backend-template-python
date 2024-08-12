@@ -3,7 +3,7 @@ from src.infrastructure.acl.dto.events.integration_event import EventDto, Integr
 from src.infrastructure.config.observability.correlation_id.correlation_id import correlation_id_ctx_var
 
 
-def of(event: Event):
+def of(event: Event) -> EventDto:
     return EventDto(
         id=event.id,
         occurred_on=event.occurred_on,
@@ -14,7 +14,7 @@ def of(event: Event):
     )
 
 
-def to_json(event: Event):
+def to_json(event: Event) -> str:
     dto = of(event)
 
     return IntegrationEvent(

@@ -11,7 +11,6 @@ from aio_pika.abc import (
     AbstractRobustQueue,
     ExchangeType,
 )
-from injector import inject
 
 from src.app.ports.input.events.event_consumer import EventConsumer
 from src.infrastructure.acl.dto.events.integration_event import IntegrationEvent
