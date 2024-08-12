@@ -134,6 +134,13 @@ DB_USER=dbuser
 DB_PASS=dbpassword
 DB_DATABASE=python_template
 DB_URL=postgresql://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}
+DB_IMAGE=postgres:16.3
+MESSAGE_BROKER_HOST=localhost
+MESSAGE_BROKER_PORT=5672
+MESSAGE_BROKER_USER=guest
+MESSAGE_BROKER_PASS=guest
+APP_PORT=15000
+APP_NAME=python_template
 ```
 
 Once installed the dependencies and set up dependencies, the application server can be started by
@@ -172,19 +179,3 @@ coverage xml -i
 
 coverge combine # To merge both coverage reports
 ```
-
-# Developing a new feature
-#TODO
-# Deploying 
-#TODO
-
-# References and further readings
-
-* [**Evolutionary Database Design:**](https://martinfowler.com/articles/evodb.html) is a technique that allows to continuously 
-evolve database schemas, matching with agile development environments. In this project is achieved using [Alembic](https://alembic.sqlalchemy.org/en/latest/).
-* Hexagonal architecture: #TODO: define
-* CQRS: #TODO: define
-* Dependency injection
-* **[Structured Logging:](https://www.baeldung.com/java-structured-logging)** 
-* [**Correlation IDs**](https://medium.com/stream-zero/correlation-ids-in-enterprise-architecture-d5851df23da0)
-

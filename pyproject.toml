@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-template"
-version = "0.1.0"
+version = "0.2.0"
 description = "A python basic template that encourages some good practices."
 authors = ["cdanmontoya <carlos.danmontoya@gmail.com>"]
 readme = "README.md"
@@ -110,6 +110,3 @@ modules =[
     "src.domain",
     "src.infrastructure.acl.dto",
 ]
-#ignore_imports =[
-#    "src.infrastructure.acl.dto.events.integration_event -> src.domain.events.event"
-#]
